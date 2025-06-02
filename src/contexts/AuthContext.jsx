@@ -1,197 +1,3 @@
-// src/contexts/AuthContext.jsx
-import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { useNavigate, useLocation } from 'react-router-dom';
-// apiClient is not strictly needed here if authApiService handles all calls.
-// However, if you ever needed to clear global Axios headers on logout, it might be.
-// import apiClient from '../services/apiClient';
-import * as authApiService from '../services/auth.service.js'; // API calls for login, logout, register etc.
-import useLocalStorage from '../hooks/useLocalStorage';
-import { LOCAL_STORAGE_KEYS, ROUTES, USER_ROLES, UI_STATE } from '../utils/constants'; // Ensure USER_ROLES is imported
-import logger from '../utils/logger.util.js';
-
-// 1. Define INITIAL_USER_STATE for useLocalStorage
-const INITIAL_USER_STATE = null;
-
-export const AuthContext = createContext(undefined);
-
-export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useLocalStorage(LOCAL_STORAGE_KEYS.AUTH_USER, INITIAL_USER_STATE);
-    const [isAuthenticated, setIsAuthenticated] = useState(!!user);
-    const [isLoading, setIsLoading] = useState(true); // Start true to check initial auth state
-    const [authError, setAuthError] = useState(null); // Renamed from 'error' to be more specific
-
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    // Effect to check authentication status on initial load or when user changes
-    useEffect(() => {
-        if (user) {
-            setIsAuthenticated(true);
-            // For HttpOnly cookies, browser handles sending. No Axios default header needed for JWT.
-        } else {
-            setIsAuthenticated(false);
-        }
-        setIsLoading(false); // Finished initial auth check
-    }, [user]);
-
-    const login = useCallback(async (email, password) => {
-        setIsLoading(true);
-        setAuthError(null);
-        try {
-            const response = await authApiService.loginUserApi({ email, password });
-            if (response.success && response.data.user) {
-                const loggedInUser = response.data.user;
-                setUser(loggedInUser); // This also triggers the useEffect above
-                // setIsAuthenticated(true); // Handled by useEffect based on user
-                logger.info('AuthContext: Login successful', { email: loggedInUser.email, role: loggedInUser.role });
-
-                // Role-based redirection
-                const intendedPath = location.state?.from?.pathname;
-                let redirectTo = ROUTES.HOME; // Default fallback
-
-                if (loggedInUser.role === USER_ROLES.ADMIN) {
-                    redirectTo = (intendedPath && intendedPath.startsWith('/admin')) ? intendedPath : ROUTES.ADMIN_DASHBOARD;
-                } else if (loggedInUser.role === USER_ROLES.SUPPORT_AGENT) {
-                    redirectTo = (intendedPath && intendedPath.startsWith('/support')) ? intendedPath : ROUTES.SUPPORT_DASHBOARD;
-                } else { // Default to User (Investor)
-                    // Don't redirect to auth pages if intendedPath was one of them
-                    const authRoutes = [ROUTES.LOGIN, ROUTES.REGISTER, ROUTES.FORGOT_PASSWORD, ROUTES.RESET_PASSWORD];
-                    if (intendedPath && !authRoutes.includes(intendedPath)) {
-                        redirectTo = intendedPath;
-                    } else {
-                        redirectTo = ROUTES.USER_DASHBOARD;
-                    }
-                }
-                navigate(redirectTo, { replace: true });
-                return { success: true, user: loggedInUser };
-            } else {
-                // This case should ideally be caught by the catch block if loginUserApi throws for non-success
-                const message = response.message || 'Login failed due to an unknown issue.';
-                setAuthError(message);
-                return { success: false, message };
-            }
-        } catch (err) {
-            const errorMessage = err.response?.data?.message || err.message || 'Login failed. Please check your credentials.';
-            logger.error('AuthContext: Login error', { errorMessage, originalError: err });
-            setAuthError(errorMessage);
-            // setUser(null); // Already handled if we throw and component catches
-            // setIsAuthenticated(false);
-            // Don't setIsLoading(false) here, let finally block do it.
-            // Re-throw for the component to handle or return specific error structure
-            throw new Error(errorMessage); // Re-throw to be caught by LoginForm
-        } finally {
-            setIsLoading(false);
-        }
-    }, [setUser, navigate, location.state]);
-
-    const register = useCallback(async (userData) => {
-        setIsLoading(true);
-        setAuthError(null);
-        try {
-            const response = await authApiService.registerUserApi(userData);
-            if (response.success) {
-                logger.info('AuthContext: Registration successful', { email: response.data?.email || userData.email });
-                // Navigation to verify email page is handled by RegisterForm component
-                return { success: true, message: response.message, data: response.data };
-            } else {
-                throw new Error(response.message || 'Registration failed.');
-            }
-        } catch (err) {
-            const errorMessage = err.response?.data?.message || err.message || 'Registration failed. Please try again.';
-            logger.error('AuthContext: Registration error', { errorMessage, originalError: err });
-            setAuthError(errorMessage); // Set error for RegisterForm to potentially display
-            throw new Error(errorMessage); // Re-throw
-        } finally {
-            setIsLoading(false);
-        }
-    }, []);
-
-    const logout = useCallback(async (shouldRedirect = true) => {
-        setIsLoading(true); // Indicate loading during logout process
-        setAuthError(null);
-        logger.info('AuthContext: Initiating logout.');
-        try {
-            await authApiService.logoutUserApi(); // Call API to invalidate session/cookies on backend
-            logger.info('AuthContext: Logout API call successful.');
-        } catch (err) {
-            logger.error('AuthContext: Logout API call failed, proceeding with client-side logout:', err.message);
-            // Still proceed with client-side cleanup even if API call fails
-        } finally {
-            setUser(INITIAL_USER_STATE); // Clear user from localStorage & state
-            // setIsAuthenticated(false); // Handled by useEffect based on user
-            // Any other client-side cleanup
-            // e.g., clear other specific localStorage items related to the user
-            Object.keys(localStorage).forEach(key => {
-                if (key.startsWith('stfx_chatHistory_')) { // Clear chat histories
-                    localStorage.removeItem(key);
-                }
-                if (key.startsWith('stfx_seenBroadcasts_')) { // Clear seen broadcasts
-                    localStorage.removeItem(key);
-                }
-            });
-            setIsLoading(false);
-            if (shouldRedirect) {
-                logger.info('AuthContext: Redirecting to login page after logout.');
-                navigate(ROUTES.LOGIN, { replace: true });
-            }
-        }
-    }, [setUser, navigate]);
-
-    const fetchAndUpdateUser = useCallback(async () => {
-        if (!isAuthenticated) { // Only if already thought to be authenticated
-            logger.debug("AuthContext: fetchAndUpdateUser called but not authenticated, skipping.");
-            return;
-        }
-        logger.debug("AuthContext: Attempting to fetch and update user data.");
-        // setIsLoading(true); // Optional: show loading state for this specific action
-        try {
-            const response = await authApiService.getCurrentUserApi(); // Call GET /auth/me
-            if (response.success && response.data) {
-                setUser(response.data); // Update user in localStorage and context state
-                logger.info("AuthContext: User data refreshed successfully.", response.data.email);
-            } else {
-                logger.warn('AuthContext: Failed to refresh user data from /auth/me, API call reported non-success. Logging out.', response.message);
-                await logout(); // Force logout
-            }
-        } catch (error) {
-            logger.error('AuthContext: Error fetching current user for update:', error);
-            if (error.response?.status === 401 || error.response?.status === 403) {
-                logger.warn('AuthContext: Received 401/403 on /auth/me. Logging out.');
-                await logout(); // Force logout
-            }
-            // Do not set global authError here unless desired
-        } finally {
-            // setIsLoading(false);
-        }
-    }, [isAuthenticated, setUser, logout]);
-
-    // Memoize the context value to prevent unnecessary re-renders of consumers
-    // when the provider's parent re-renders.
-    const contextValue = useMemo(() => ({
-        user,
-        isAuthenticated,
-        isLoading, // Global loading state for auth operations
-        error: authError, // Global auth error
-        login,
-        logout,
-        register,
-        setUser, // Expose setUser if direct manipulation is ever needed (use with caution)
-        fetchAndUpdateUser,
-        clearAuthError: () => setAuthError(null) // Function to clear auth errors
-    }), [user, isAuthenticated, isLoading, authError, login, logout, register, setUser, fetchAndUpdateUser]);
-
-    return (
-        <AuthContext.Provider value={contextValue}>
-            {children}
-        </AuthContext.Provider>
-    );
-};
-
-AuthProvider.propTypes = {
-    children: PropTypes.node.isRequired,
-};
-
 // import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 // import PropTypes from 'prop-types';
 // import { useNavigate, useLocation } from 'react-router-dom';
@@ -417,3 +223,272 @@ AuthProvider.propTypes = {
 // AuthProvider.propTypes = {
 //     children: PropTypes.node.isRequired,
 // };
+
+// src/contexts/AuthContext.jsx
+import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { useNavigate, useLocation } from 'react-router-dom';
+import * as authApiService from '../services/auth.service.js';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { LOCAL_STORAGE_KEYS, ROUTES, USER_ROLES } from '../utils/constants';
+import logger from '../utils/logger.util.js';
+
+const INITIAL_USER_STATE = null;
+export const AuthContext = createContext({
+    user: INITIAL_USER_STATE,
+    isAuthenticated: false,
+    isLoading: true,
+    authError: null,
+    login: async () => { throw new Error("Login function not yet implemented in AuthContext") },
+    logout: async () => { throw new Error("Logout function not yet implemented in AuthContext") },
+    register: async () => { throw new Error("Register function not yet implemented in AuthContext") },
+    fetchAndUpdateUser: async () => { throw new Error("fetchAndUpdateUser function not yet implemented") },
+    clearAuthError: () => { },
+    token: null, // Placeholder if you ever need to expose token directly (not for HttpOnly)
+});
+
+// Global flag to manage if a session expiry logout is already in progress
+// This helps prevent multiple logout triggers from concurrent 401s.
+if (typeof window !== 'undefined') {
+    window._isLoggingOutDueToExpiry = false;
+}
+
+export const AuthProvider = ({ children }) => {
+    const [user, setUserInLocalStorage] = useLocalStorage(LOCAL_STORAGE_KEYS.AUTH_USER, INITIAL_USER_STATE);
+    const [currentUser, setCurrentUser] = useState(user); // Local state for current user, synced with localStorage
+    const [isAuthenticated, setIsAuthenticated] = useState(!!user);
+    const [isLoading, setIsLoading] = useState(true); // Start true: checking initial auth state
+    const [authError, setAuthError] = useState(null);
+    // We don't store the actual JWT token in context if it's HttpOnly.
+    // The 'token' in context could be used if you ever switch to client-side token storage.
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // Sync local currentUser state with user from localStorage on initial load or if 'user' (from LS) changes
+    useEffect(() => {
+        logger.debug("AuthContext: User from localStorage changed or initial load.", user);
+        setCurrentUser(user);
+        setIsAuthenticated(!!user);
+        setIsLoading(false); // Finished initial check based on localStorage
+    }, [user]);
+
+
+    const logout = useCallback(async (isTriggeredBySessionExpiry = false) => {
+        // Prevent multiple logout calls if already in process or logged out
+        if (!isAuthenticated && !currentUser) {
+            logger.info("AuthContext: Logout called but already effectively logged out.");
+            // If already on login and triggered by session expiry, don't navigate again
+            if (isTriggeredBySessionExpiry && location.pathname === ROUTES.LOGIN) return;
+            if (location.pathname !== ROUTES.LOGIN) navigate(ROUTES.LOGIN, { replace: true });
+            return;
+        }
+
+        logger.info(`AuthContext: Initiating logout. Triggered by session expiry: ${isTriggeredBySessionExpiry}`);
+        setIsLoading(true); // Indicate process is starting
+        setAuthError(null);
+
+        try {
+            await authApiService.logoutUserApi(); // Attempt to invalidate backend session/cookie
+            logger.info('AuthContext: Logout API call successful.');
+        } catch (err) {
+            logger.error('AuthContext: Logout API call failed, proceeding with client-side cleanup:', err.message);
+        } finally {
+            setUserInLocalStorage(INITIAL_USER_STATE); // Clears user from localStorage
+            setCurrentUser(INITIAL_USER_STATE);      // Clears local context state
+            setIsAuthenticated(false);                // Explicitly set auth status
+
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('stfx_chatHistory_') || key.startsWith('stfx_seenBroadcasts_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+
+            if (typeof window !== 'undefined') {
+                window._isLoggingOutDueToExpiry = false; // Reset the flag
+            }
+            setIsLoading(false);
+
+            logger.info('AuthContext: Logout process complete. Navigating to login.');
+            navigate(ROUTES.LOGIN, {
+                replace: true,
+                state: isTriggeredBySessionExpiry ? { from: location, sessionExpired: true } : undefined
+            });
+        }
+    }, [setUserInLocalStorage, navigate, isAuthenticated, currentUser, location]);
+
+
+    // Listen for the custom event from apiClient to trigger logout
+    useEffect(() => {
+        const handleSessionExpiredLogout = () => {
+            if (typeof window !== 'undefined' && !window._isLoggingOutDueToExpiry) {
+                window._isLoggingOutDueToExpiry = true; // Set flag to prevent multiple triggers
+                logger.warn("AuthContext: 'auth_session_expired_logout' event received. Initiating logout.");
+                logout(true); // Pass true to indicate it's due to session expiry
+            } else if (typeof window !== 'undefined' && window._isLoggingOutDueToExpiry) {
+                logger.info("AuthContext: 'auth_session_expired_logout' event received, but logout already in progress.");
+            }
+        };
+
+        if (typeof window !== 'undefined') {
+            window.addEventListener('auth_session_expired_logout', handleSessionExpiredLogout);
+            logger.info("AuthContext: Event listener for 'auth_session_expired_logout' attached.");
+        }
+        return () => {
+            if (typeof window !== 'undefined') {
+                window.removeEventListener('auth_session_expired_logout', handleSessionExpiredLogout);
+                logger.info("AuthContext: Event listener for 'auth_session_expired_logout' removed.");
+            }
+        };
+    }, [logout]); // Depends on the memoized logout function
+
+
+    const login = useCallback(async (email, password) => {
+        if (typeof window !== 'undefined') {
+            window._isLoggingOutDueToExpiry = false; // Reset any pending expiry logout state
+        }
+        setIsLoading(true);
+        setAuthError(null);
+        try {
+            const response = await authApiService.loginUserApi({ email, password });
+            if (response.success && response.data.user) {
+                const loggedInUser = response.data.user;
+                // IMPORTANT: Set user in localStorage first, then local state, then isAuthenticated
+                setUserInLocalStorage(loggedInUser);
+                setCurrentUser(loggedInUser);
+                setIsAuthenticated(true);
+                logger.info('AuthContext: Login successful', { email: loggedInUser.email, role: loggedInUser.role });
+
+                const intendedPath = location.state?.from?.pathname;
+                let redirectTo = ROUTES.USER_DASHBOARD;
+
+                if (loggedInUser.role === USER_ROLES.ADMIN) {
+                    redirectTo = (intendedPath && intendedPath.startsWith('/admin')) ? intendedPath : ROUTES.ADMIN_DASHBOARD;
+                } else if (loggedInUser.role === USER_ROLES.SUPPORT_AGENT) {
+                    redirectTo = (intendedPath && intendedPath.startsWith('/support')) ? intendedPath : ROUTES.SUPPORT_DASHBOARD;
+                } else {
+                    const authRoutes = [ROUTES.LOGIN, ROUTES.REGISTER, ROUTES.FORGOT_PASSWORD, ROUTES.RESET_PASSWORD, ROUTES.HOME];
+                    if (intendedPath && !authRoutes.includes(intendedPath) && intendedPath !== '/') {
+                        redirectTo = intendedPath;
+                    } else {
+                        redirectTo = ROUTES.USER_DASHBOARD;
+                    }
+                }
+                logger.info(`AuthContext: Navigating to ${redirectTo} after login.`);
+                navigate(redirectTo, { replace: true });
+                return { success: true, user: loggedInUser };
+            } else {
+                const message = response.message || 'Login failed. Please check your credentials.';
+                setAuthError(message);
+                throw new Error(message); // Propagate error for LoginForm
+            }
+        } catch (err) {
+            const errorMessage = err.response?.data?.message || err.message || 'Login failed. Please check your credentials.';
+            logger.error('AuthContext: Login error', { errorMessage, originalErrorDetails: err });
+            setAuthError(errorMessage);
+            setCurrentUser(INITIAL_USER_STATE); // Ensure user state is cleared on failed login
+            setIsAuthenticated(false);
+            throw new Error(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [setUserInLocalStorage, navigate, location.state]);
+
+    const register = useCallback(async (userData) => {
+        // ... (register logic as before, ensure it throws error for form to catch)
+        setIsLoading(true);
+        setAuthError(null);
+        try {
+            const response = await authApiService.registerUserApi(userData);
+            if (response.success) {
+                logger.info('AuthContext: Registration successful', { email: response.data?.email || userData.email });
+                return { success: true, message: response.message || "Registration successful.", data: response.data };
+            } else {
+                throw new Error(response.message || 'Registration failed.');
+            }
+        } catch (err) {
+            const errorMessage = err.response?.data?.message || err.message || 'Registration failed.';
+            setAuthError(errorMessage);
+            throw new Error(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
+    }, []);
+
+    const fetchAndUpdateUser = useCallback(async () => {
+        // This function is usually called when app loads or user revisits after a while
+        // to ensure the context `user` is up-to-date with the backend,
+        // and to implicitly verify the active session token.
+        if (!isAuthenticated && !localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)) {
+            logger.debug("AuthContext: fetchAndUpdateUser - no persisted user or not authenticated, skipping /me call.");
+            setIsLoading(false); // Ensure loading is false if we skip
+            return;
+        }
+
+        logger.debug("AuthContext: Attempting to fetch and update user data via /auth/me.");
+        // Don't set global isLoading here to avoid full page loader, unless desired
+        // const previousIsLoading = isLoading;
+        // setIsLoading(true);
+        try {
+            const response = await authApiService.getCurrentUserApi();
+            if (response.success && response.data) {
+                setUserInLocalStorage(response.data); // This will trigger the useEffect to update currentUser and isAuthenticated
+                logger.info("AuthContext: User data refreshed successfully via /auth/me for", response.data.email);
+            } else {
+                logger.warn('AuthContext: Failed to refresh user data from /auth/me (API non-success), logging out.', response.message);
+                await logout(true);
+            }
+        } catch (error) {
+            logger.error('AuthContext: Error fetching current user data for update:', error);
+            if (error.response?.status === 401 || error.response?.status === 403) {
+                logger.warn('AuthContext: Received 401/403 on /auth/me. Logging out.');
+                await logout(true);
+            }
+        } finally {
+            // setIsLoading(previousIsLoading); // Restore previous loading state or just false
+            // setIsLoading(false); // If we set it true at the start of this func
+        }
+    }, [isAuthenticated, setUserInLocalStorage, logout]);
+
+
+    // Initial check on app load - if a user exists in localStorage, try to validate them.
+    // This helps catch cases where localStorage has a user but their token is actually invalid from the start.
+    useEffect(() => {
+        const validatePersistedUser = async () => {
+            const persistedUser = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER);
+            if (persistedUser) {
+                logger.info("AuthContext: Persisted user found in localStorage, attempting to validate session via /auth/me.");
+                // We don't want to set main isLoading here, fetchAndUpdateUser can manage its own if needed
+                await fetchAndUpdateUser(); // This will call /auth/me
+            } else {
+                setIsLoading(false); // No user in LS, nothing to validate, stop initial loading.
+            }
+        };
+        validatePersistedUser();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // Run only once on initial mount
+
+
+    const contextValue = useMemo(() => ({
+        user: currentUser, // Use the local state `currentUser` for consumers
+        isAuthenticated,
+        isLoading,
+        error: authError,
+        login,
+        logout,
+        register,
+        setUser: setUserInLocalStorage, // This will update localStorage and subsequently currentUser
+        fetchAndUpdateUser,
+        clearAuthError: () => setAuthError(null)
+    }), [currentUser, isAuthenticated, isLoading, authError, login, logout, register, setUserInLocalStorage, fetchAndUpdateUser]);
+
+    return (
+        <AuthContext.Provider value={contextValue}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+AuthProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+};
