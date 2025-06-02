@@ -190,7 +190,7 @@ export const AuthProvider = ({ children }) => {
 
 AuthProvider.propTypes = {
     children: PropTypes.node.isRequired,
-// };
+};
 
 // import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 // import PropTypes from 'prop-types';
