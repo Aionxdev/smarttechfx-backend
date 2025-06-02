@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Sidebar from './Sidebar';
-import Topbar from './Topbar'; 
+import Topbar from './TopBar'; 
 import useAuth from '../../hooks/useAuth';
 import { ROUTES, APP_NAME } from '../../utils/constants';
 import { LayoutDashboard, DollarSign, Users, BriefcaseMedical, ArrowRightLeft, Settings, BarChart3, MessageCircleWarning, FileText, ShieldAlert, LifeBuoy } from 'lucide-react';
