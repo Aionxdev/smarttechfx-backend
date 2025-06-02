@@ -192,7 +192,8 @@
 //     children: PropTypes.node.isRequired,
 // };
 
-import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
+
+import React, { createContext, useState, useEffect, useCallback, useMemo, useRef } from 'react'; // Import useRef
 import PropTypes from 'prop-types';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as authApiService from '../services/auth.service.js';
@@ -203,69 +204,75 @@ import logger from '../utils/logger.util.js';
 const INITIAL_USER_STATE = null;
 export const AuthContext = createContext(undefined);
 
-// Global flag to prevent multiple logout triggers from concurrent 401s
-// This flag should be managed carefully.
-if (typeof window !== 'undefined') {
-    window._authSessionFailed = false;
-}
+// Remove global flag or redefine its use, preferably move state into component via useRef
+// if (typeof window !== 'undefined') {
+//     window._authSessionFailed = false; // This is problematic for server-side rendering/testing
+// }
 
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useLocalStorage(LOCAL_STORAGE_KEYS.AUTH_USER, INITIAL_USER_STATE);
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // Initialize false
-    const [isLoading, setIsLoading] = useState(true); // Start true to check initial auth state
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState(null);
 
     const navigate = useNavigate();
-    const location = useLocation();
+    const location = useLocation(); // Access `location` directly when needed inside `useCallback`
+
+    // Ref to manage if a logout process is currently active due to session expiry
+    const isLogoutInProgress = useRef(false);
 
     // Effect to set isAuthenticated based on user state from localStorage/initial check
     useEffect(() => {
         if (user) {
             setIsAuthenticated(true);
-            // If user exists, we might want to verify their session on app load
-            // This helps catch cases where localStorage has user but token is long expired
-            // For now, this is handled by API calls failing and triggering logout.
         } else {
             setIsAuthenticated(false);
         }
         setIsLoading(false); // Finished initial auth check
-    }, [user]);
-
+    }, [user]); // Only depends on `user`
 
     const logout = useCallback(async (isSessionExpired = false) => {
-        // Prevent multiple logout calls if already in process or logged out
+        // Use the ref to prevent re-entry
+        if (isLogoutInProgress.current) {
+            logger.debug('AuthContext: Logout already in progress. Aborting duplicate call.');
+            return;
+        }
+
+        // Handle early exit if already logged out and not a forced session expiry redirect
         if (!isAuthenticated && !localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)) {
-            // If not redirecting and already on login, do nothing further
-            if (isSessionExpired && location.pathname === ROUTES.LOGIN) return;
-            // If already on login, no need to navigate again unless specifically forced
+            if (!isSessionExpired && location.pathname === ROUTES.LOGIN) return; // Already on login, not forced
             if (location.pathname !== ROUTES.LOGIN) navigate(ROUTES.LOGIN, { replace: true });
             return;
         }
 
+        isLogoutInProgress.current = true; // Set flag
         logger.info(`AuthContext: Initiating logout. Session expired: ${isSessionExpired}`);
         setIsLoading(true); // Show loading during logout process
         setAuthError(null);
 
         try {
-            await authApiService.logoutUserApi(); // Attempt to invalidate backend session/cookie
-            logger.info('AuthContext: Logout API call successful.');
+            // Attempt to invalidate backend session/cookie
+            // Only call backend if there's a user or it's not a session expiry logout (to prevent redundant calls)
+            if (user || !isSessionExpired) { // If user is null but it's *not* session expiry, maybe still try
+                await authApiService.logoutUserApi();
+                logger.info('AuthContext: Logout API call successful.');
+            } else {
+                logger.info('AuthContext: Skipping logout API call (user already null and session expired).');
+            }
         } catch (err) {
             logger.error('AuthContext: Logout API call failed, proceeding with client-side cleanup:', err.message);
         } finally {
             setUser(INITIAL_USER_STATE); // Clears user from localStorage and context state
-            // setIsAuthenticated(false); // This will be set by the useEffect watching `user`
 
             // Clear other user-specific local storage items
             Object.keys(localStorage).forEach(key => {
-                if (key.startsWith('stfx_chatHistory_') || key.startsWith('stfx_seenBroadcasts_')) {
+                if (key.startsWith(LOCAL_STORAGE_KEYS.CHAT_HISTORY_PREFIX) || key.startsWith(LOCAL_STORAGE_KEYS.BROADCASTS_PREFIX)) { // Using constants for prefixes
                     localStorage.removeItem(key);
                 }
             });
 
-            if (typeof window !== 'undefined') {
-                window._authSessionFailed = false; // Reset the global flag
-            }
+            isLogoutInProgress.current = false; // Reset flag after cleanup
             setIsLoading(false); // Done with logout process
 
             // Only redirect if not already on a public/auth page or if explicitly forced by session expiry
@@ -278,15 +285,17 @@ export const AuthProvider = ({ children }) => {
                 });
             }
         }
-    }, [setUser, navigate, isAuthenticated, location]);
-
+    }, [setUser, navigate, user, location.pathname, isAuthenticated]); // Add user and isAuthenticated to dependencies for internal checks, location.pathname is stable
 
     // Listen for the custom event from apiClient to trigger logout
     useEffect(() => {
         const handleSessionExpiredLogout = () => {
-            if (typeof window !== 'undefined' && window._authSessionFailed) { // Ensure it was triggered by apiClient
+            // Use the ref to ensure this only triggers once
+            if (!isLogoutInProgress.current) {
                 logger.warn("AuthContext: 'auth_session_expired_logout' event received. Logging out.");
                 logout(true); // Pass true to indicate session expired and force redirect
+            } else {
+                logger.debug("AuthContext: 'auth_session_expired_logout' event received, but logout already in progress. Skipping.");
             }
         };
 
@@ -298,24 +307,22 @@ export const AuthProvider = ({ children }) => {
                 window.removeEventListener('auth_session_expired_logout', handleSessionExpiredLogout);
             }
         };
-    }, [logout]); // `logout` is memoized
-
+    }, [logout]); // `logout` is memoized and its dependencies are now stable.
 
     const login = useCallback(async (email, password) => {
-        if (typeof window !== 'undefined') {
-            window._authSessionFailed = false; // Reset flag on new login attempt
-        }
+        // Reset flag on new login attempt
+        isLogoutInProgress.current = false;
         setIsLoading(true);
         setAuthError(null);
         try {
             const response = await authApiService.loginUserApi({ email, password });
             if (response.success && response.data.user) {
                 const loggedInUser = response.data.user;
-                setUser(loggedInUser); // This updates localStorage and triggers useEffect for isAuthenticated
+                setUser(loggedInUser);
                 logger.info('AuthContext: Login successful', { email: loggedInUser.email, role: loggedInUser.role });
 
                 const intendedPath = location.state?.from?.pathname;
-                let redirectTo = ROUTES.USER_DASHBOARD; // Default for investor
+                let redirectTo = ROUTES.USER_DASHBOARD;
 
                 if (loggedInUser.role === USER_ROLES.ADMIN) {
                     redirectTo = (intendedPath && intendedPath.startsWith('/admin')) ? intendedPath : ROUTES.ADMIN_DASHBOARD;
@@ -332,18 +339,15 @@ export const AuthProvider = ({ children }) => {
                 navigate(redirectTo, { replace: true });
                 return { success: true, user: loggedInUser };
             } else {
-                // This path might be hit if apiService doesn't throw for non-2xx but returns success:false
                 const message = response.message || 'Login failed (unknown reason).';
                 setAuthError(message);
-                throw new Error(message); // Ensure an error is thrown for LoginForm
+                throw new Error(message);
             }
         } catch (err) {
             const errorMessage = err.response?.data?.message || err.message || 'Login failed. Please check your credentials.';
             logger.error('AuthContext: Login error', { errorMessage, originalErrorDetails: err });
             setAuthError(errorMessage);
-            // No need to setUser(null) or setIsAuthenticated(false) here,
-            // as the login attempt failed, existing state remains until logout.
-            throw new Error(errorMessage); // Re-throw for LoginForm to catch
+            throw new Error(errorMessage);
         } finally {
             setIsLoading(false);
         }
@@ -368,7 +372,7 @@ export const AuthProvider = ({ children }) => {
         } finally {
             setIsLoading(false);
         }
-    }, []); // No dependencies that change typically
+    }, []);
 
     const fetchAndUpdateUser = useCallback(async () => {
         if (!isAuthenticated) {
@@ -383,13 +387,13 @@ export const AuthProvider = ({ children }) => {
                 logger.info("AuthContext: User data refreshed successfully via /auth/me for", response.data.email);
             } else {
                 logger.warn('AuthContext: Failed to refresh user data from /auth/me (API non-success). Logging out.', response.message);
-                await logout(true); // Force logout and redirect
+                await logout(true);
             }
         } catch (error) {
             logger.error('AuthContext: Error fetching current user data for update:', error);
             if (error.response?.status === 401 || error.response?.status === 403) {
                 logger.warn('AuthContext: Received 401/403 on /auth/me. Logging out.');
-                await logout(true); // Force logout and redirect
+                await logout(true);
             }
         }
     }, [isAuthenticated, setUser, logout]);
@@ -402,7 +406,7 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         register,
-        setUser, // Expose setUser carefully
+        setUser,
         fetchAndUpdateUser,
         clearAuthError: () => setAuthError(null)
     }), [user, isAuthenticated, isLoading, authError, login, logout, register, setUser, fetchAndUpdateUser]);

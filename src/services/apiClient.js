@@ -27,47 +27,6 @@ apiClient.interceptors.request.use(
     }
 );
 
-// Response Interceptor (Token refresh logic remains the same)
-// apiClient.interceptors.response.use(
-//     (response) => {
-//         logger.debug(`[API Response] < Status: ${response.status} from ${response.config.url}`);
-//         return response;
-//     },
-//     async (error) => {
-//         logger.error(
-//             `[API Response Error] < Status: ${error.response?.status} from ${error.config?.url}`,
-//             {
-//                 message: error.message,
-//                 responseData: error.response?.data,
-//                 requestData: error.config?.data,
-//                 requestParams: error.config?.params
-//             }
-//         );
-
-//         const originalRequest = error.config;
-
-//         if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
-//             originalRequest._retry = true;
-//             logger.info('[API Client] Access token potentially expired (401). Attempting to refresh...');
-//             try {
-//                 await apiClient.post('/auth/refresh-token');
-//                 logger.info('[API Client] Token refresh successful. Retrying original request.');
-//                 return apiClient(originalRequest);
-//             } catch (refreshError) {
-//                 logger.error('[API Client] Token refresh FAILED:', {
-//                     message: refreshError.message,
-//                     responseData: refreshError.response?.data
-//                 });
-//                 if (refreshError.response && refreshError.response.status === 401) {
-//                     return Promise.reject({ ...refreshError, isRefreshAuthFailure: true });
-//                 }
-//                 return Promise.reject(refreshError);
-//             }
-//         }
-//         return Promise.reject(error);
-//     }
-// );
-
 // Response Interceptor (Simplified - No Refresh Logic)
 apiClient.interceptors.response.use(
     (response) => {
