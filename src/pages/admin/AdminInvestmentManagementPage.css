@@ -1,0 +1,204 @@
+/* src/pages/admin/AdminInvestmentManagementPage.css */
+
+.admin-investment-management-page .dashboard-page-header {
+    display: flex;
+    flex-direction: column; /* Stack on small screens */
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+  }
+  
+  .admin-investment-management-page .dashboard-page-header h1 {
+    margin-bottom: 0;
+  }
+  
+  .admin-investment-management-page .dashboard-page-header p {
+    font-size: var(--font-size-base);
+    color: var(--theme-text-secondary);
+    margin-top: 0;
+  }
+  
+  @media (min-width: 768px) {
+    .admin-investment-management-page .dashboard-page-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .admin-investment-management-page .dashboard-page-header p {
+      margin-top: 0;
+    }
+  }
+  
+  /* Filter Card Styles (if you add filters for investments) */
+  .admin-investment-management-page .filter-card {
+    margin-bottom: var(--space-6);
+  }
+  
+  .admin-investment-management-page .filter-card .card-body {
+    padding: var(--space-4);
+  }
+  
+  .admin-investment-management-page .filter-form-grid { /* Reusable class for filter forms */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+    align-items: flex-end;
+  }
+  
+  .admin-investment-management-page .filter-form-grid .input-field-wrapper,
+  .admin-investment-management-page .filter-form-grid select.input-field {
+    margin-bottom: 0;
+  }
+  
+  .admin-investment-management-page .filter-form-grid button[type="submit"] {
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+  
+  
+  /* Investments Table Card Styles */
+  .admin-investment-management-page .table-card .card-body {
+    padding: 0; /* Table might have its own spacing */
+  }
+  
+  /* Table specific styles, if any, beyond common Table.css */
+  .admin-investment-management-page .table-main th,
+  .admin-investment-management-page .table-main td {
+    /* Inherits from common Table.css */
+    /* Example: White-space nowrap for certain columns to prevent awkward wrapping */
+    /* white-space: nowrap; */
+  }
+  
+  .admin-investment-management-page .table-main td .txid-truncate,
+  .admin-investment-management-page .table-main td .address-truncate {
+    display: inline-block;
+    max-width: 120px; /* Adjust as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle; /* Align with text/icons */
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+  }
+  .admin-investment-management-page .table-main td .txid-truncate:hover,
+  .admin-investment-management-page .table-main td .address-truncate:hover {
+    /* Optional: Show full on hover with a tooltip, handled by 'title' attribute */
+  }
+  
+  /* Status Badges (reusing similar structure from other admin pages) */
+  .admin-investment-management-page .status-badge {
+    padding: 3px 8px;
+    border-radius: var(--border-radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: capitalize; /* Or uppercase */
+    display: inline-block;
+    border: 1px solid transparent; /* For consistency */
+  }
+  
+  .admin-investment-management-page .status-badge.status-pendingverification {
+    background-color: var(--color-warning-bg);
+    color: var(--color-warning-text);
+    border-color: var(--color-warning-DEFAULT);
+  }
+  .admin-investment-management-page .status-badge.status-active {
+    background-color: var(--color-success-bg);
+    color: var(--color-success-text);
+    border-color: var(--color-success-DEFAULT);
+  }
+  .admin-investment-management-page .status-badge.status-matured {
+    background-color: var(--color-info-bg);
+    color: var(--color-info-text);
+    border-color: var(--color-info-DEFAULT);
+  }
+  .admin-investment-management-page .status-badge.status-withdrawn {
+    background-color: var(--theme-background-secondary);
+    color: var(--theme-text-muted);
+    border-color: var(--theme-border-secondary);
+  }
+  .admin-investment-management-page .status-badge.status-cancelled {
+    background-color: var(--color-error-bg);
+    color: var(--color-error-text);
+    border-color: var(--color-error-DEFAULT);
+  }
+  
+  
+  /* Table Actions Cell */
+  .admin-investment-management-page .table-actions {
+    display: flex;
+    gap: var(--space-2);
+  }
+  
+  
+  /* Pagination Controls (reusable from other admin pages) */
+  .admin-investment-management-page .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding: var(--space-4) 0;
+  }
+  .admin-investment-management-page .pagination-controls span {
+    font-size: var(--font-size-sm);
+    color: var(--theme-text-secondary);
+  }
+  
+  
+  /* Modal specific styling (if common Modal.css is not enough) */
+  .admin-investment-management-page .modal-content form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+  }
+  .admin-investment-management-page .modal-content form p { /* For displaying info in modal */
+      font-size: var(--font-size-sm);
+      color: var(--theme-text-secondary);
+      margin-bottom: var(--space-1);
+  }
+  .admin-investment-management-page .modal-content form p strong {
+      color: var(--theme-text-primary);
+  }
+  .admin-investment-management-page .modal-message { /* Reusable class */
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--space-3);
+    font-size: var(--font-size-sm);
+    text-align: center;
+  }
+  .admin-investment-management-page .modal-message.success {
+    background-color: var(--color-success-bg);
+    color: var(--color-success-text);
+  }
+  .admin-investment-management-page .modal-message.error {
+    background-color: var(--color-error-bg);
+    color: var(--color-error-text);
+  }
+  .admin-investment-management-page .modal-message.info {
+    background-color: var(--color-info-bg);
+    color: var(--color-info-text);
+  }
+  .admin-investment-management-page .modal-actions { /* Reusable class */
+    margin-top: var(--space-4);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-2);
+  }
+  
+  
+  /* Page Loading / Error States (can be global or here) */
+  .admin-investment-management-page .page-loading,
+  .admin-investment-management-page .page-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12) var(--space-4);
+    text-align: center;
+    min-height: 300px;
+  }
+  .admin-investment-management-page .page-error {
+    color: var(--color-error-DEFAULT);
+  }
+  .admin-investment-management-page .page-error button {
+    margin-top: var(--space-4);
+  }

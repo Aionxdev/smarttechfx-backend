@@ -1,0 +1,87 @@
+/* src/components/dashboard/InvestmentItem.css */
+.investment-item {
+    /* Uses common Card styles. */
+    /* Specific overrides or additions can go here. */
+}
+
+.investment-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+}
+
+.investment-item-plan-name {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--theme-text-primary);
+    margin: 0;
+}
+
+.investment-item-status {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    padding: var(--space-05, 2px) var(--space-2);
+    border-radius: var(--border-radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Status Colors (match these with your theme) */
+.status-active { background-color: var(--color-success-bg); color: var(--color-success-text); border: 1px solid var(--color-success-DEFAULT);}
+.status-matured { background-color: var(--color-info-bg); color: var(--color-info-text); border: 1px solid var(--color-info-DEFAULT); }
+.status-pending { background-color: var(--color-warning-bg); color: var(--color-warning-text); border: 1px solid var(--color-warning-DEFAULT); }
+.status-withdrawn { background-color: var(--theme-background-secondary); color: var(--theme-text-muted); border: 1px solid var(--theme-border-secondary); }
+.status-cancelled { background-color: var(--color-error-bg); color: var(--color-error-text); border: 1px solid var(--color-error-DEFAULT); }
+.status-default { background-color: var(--theme-background-secondary); color: var(--theme-text-secondary); }
+
+
+.investment-item-details {
+    font-size: var(--font-size-sm);
+    color: var(--theme-text-secondary);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+.investment-item-details p {
+    margin-bottom: var(--space-1); /* Less margin for detail items */
+}
+.investment-item-details p strong {
+    color: var(--theme-text-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+.investment-item-progress {
+    margin-bottom: var(--space-4);
+}
+.progress-bar-container {
+    width: 100%;
+    background-color: var(--theme-background-hover);
+    border-radius: var(--border-radius-md);
+    height: 18px; /* Adjust height */
+    overflow: hidden;
+}
+.progress-bar {
+    height: 100%;
+    background-color: var(--theme-accent-green); /* Or primary color */
+    color: #fff;
+    text-align: center;
+    font-size: var(--font-size-xs);
+    line-height: 18px; /* Match container height */
+    font-weight: var(--font-weight-medium);
+    transition: width 0.5s ease-in-out;
+    white-space: nowrap;
+}
+
+.investment-item-actions {
+    margin-top: auto; /* Pushes actions to the bottom of the card */
+    display: flex;
+    gap: var(--space-2);
+    justify-content: flex-end; /* Or space-between */
+    padding-top: var(--space-3); /* If separated from card body by border */
+    /* border-top: 1px solid var(--theme-border-divider); */ /* Optional separator */
+}
+.investment-item .card-body { /* Ensure no double padding if actions inside card-body */
+    padding-bottom: var(--space-4);
+}

@@ -1,0 +1,28 @@
+/* src/pages/user/MyPlansPage.css */
+.my-plans-page .dashboard-page-header { margin-bottom: var(--space-6); }
+.tabs-container {
+    display: flex;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+    border-bottom: 2px solid var(--theme-border-divider);
+}
+.tabs-container .btn {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: transparent;
+    padding-bottom: calc(var(--space-3) + 2px); /* +2px for border */
+}
+.tabs-container .btn-primary {
+    border-bottom-color: var(--theme-primary-main) !important;
+    position: relative;
+    bottom: -2px; /* Align with main border */
+}
+.plans-grid, .investments-list-myplans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-6);
+}
+.modal-actions { margin-top: var(--space-4); display: flex; justify-content: flex-end; gap: var(--space-2); }
+.modal-message.success { color: var(--color-success-DEFAULT); }
+.modal-message.error { color: var(--color-error-DEFAULT); }
+.modal-message.info { color: var(--theme-text-secondary); }

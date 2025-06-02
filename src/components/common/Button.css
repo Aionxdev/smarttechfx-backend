@@ -1,0 +1,178 @@
+/* src/components/common/Button.css */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2) var(--space-4);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-normal);
+    border-radius: var(--border-radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition-normal);
+    white-space: nowrap;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  .btn:disabled,
+  .btn.btn-loading {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+  
+  /* Variants */
+  .btn-primary {
+    background-color: var(--theme-primary-main);
+    color: var(--theme-text-on-primary);
+    border-color: var(--theme-primary-main);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--theme-primary-hover);
+    border-color: var(--theme-primary-hover);
+  }
+  .btn-primary:active:not(:disabled) {
+    background-color: var(--theme-primary-active);
+    border-color: var(--theme-primary-active);
+  }
+  
+  .btn-secondary {
+    background-color: var(--theme-text-secondary, #6c757d); /* Using a theme variable or fallback */
+    color: #fff; /* Assuming white text on secondary */
+    border-color: var(--theme-text-secondary, #6c757d);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background-color: #5a6268; /* Darken */
+    border-color: #545b62;
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    color: var(--theme-primary-main);
+    border-color: var(--theme-primary-main);
+  }
+  .btn-outline:hover:not(:disabled) {
+    background-color: var(--theme-primary-main);
+    color: var(--theme-text-on-primary);
+  }
+  
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--theme-primary-main);
+    border-color: transparent;
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background-color: var(--theme-background-hover); /* Subtle background on hover */
+    /* color: var(--theme-primary-hover); */ /* Optional: darken text too */
+  }
+  
+  .btn-danger {
+    background-color: var(--color-error-DEFAULT);
+    color: #fff;
+    border-color: var(--color-error-DEFAULT);
+  }
+  .btn-danger:hover:not(:disabled) {
+    background-color: #c82333; /* Darker red */
+    border-color: #bd2130;
+  }
+  
+  .btn-success {
+    background-color: var(--color-success-DEFAULT);
+    color: #fff;
+    border-color: var(--color-success-DEFAULT);
+  }
+  .btn-success:hover:not(:disabled) {
+    background-color: #157347; /* Darker green */
+    border-color: #146c43;
+  }
+  
+  .btn-warning {
+    background-color: var(--color-warning-DEFAULT);
+    color: var(--color-warning-text); /* Often dark text for yellow */
+    border-color: var(--color-warning-DEFAULT);
+  }
+  .btn-warning:hover:not(:disabled) {
+    background-color: #e0a800; /* Darker yellow */
+    border-color: #d39e00;
+  }
+  
+  .btn-info {
+    background-color: var(--color-info-DEFAULT);
+    color: #fff;
+    border-color: var(--color-info-DEFAULT);
+  }
+  .btn-info:hover:not(:disabled) {
+    background-color: #1a5a96; /* Darker info blue */
+    border-color: #18518a;
+  }
+  
+  .btn-link { /* For link-like buttons */
+      background: none;
+      border: none;
+      color: var(--theme-primary-main);
+      text-decoration: underline;
+      padding: 0;
+      font-weight: var(--font-weight-normal);
+  }
+  .btn-link:hover {
+      color: var(--theme-primary-hover);
+  }
+  
+  
+  /* Sizes */
+  .btn-xs {
+    padding: var(--space-05, 0.125rem) var(--space-2); /* Assuming var(--space-05) is 2px */
+    font-size: var(--font-size-xs);
+  }
+  .btn-sm {
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-sm);
+  }
+  /* .btn-md removed: Default size, already set by .btn padding */
+  .btn-lg {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-lg);
+  }
+  
+  
+  .btn-full-width {
+    inline-size: 100%;
+  }
+  
+  /* Loading State */
+  .btn-spinner {
+    display: inline-block;
+    inline-size: 1em; /* Relative to font size */
+    block-size: 1em;
+    border: 2px solid currentColor;
+    border-inline-end-color: transparent; /* Creates the spinner effect */
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite; /* Assuming spin is defined in _animations.css */
+  }
+  /* Ensure spinner is appropriately positioned with text/icons */
+  .btn-loading .btn-text {
+    margin-inline-start: var(--space-2); /* Space between spinner and text */
+    opacity: 0.7;
+  }
+  .btn-loading .btn-icon { /* Hide icons when loading */
+      display: none;
+  }
+  /* If button only has spinner and no text children */
+  .btn-loading > .btn-spinner:only-child {
+      margin-inline-end: 0;
+  }
+  
+  
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+  }
+  .btn-icon-left {
+    margin-inline-end: var(--space-2);
+  }
+  .btn-icon-right {
+    margin-inline-start: var(--space-2);
+  }

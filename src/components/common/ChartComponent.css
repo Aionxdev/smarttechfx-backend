@@ -1,0 +1,25 @@
+/* src/components/common/ChartComponent.css */
+.chart-container {
+    position: relative;
+    /* min-height: 300px; Default height, can be overridden */
+    height: 350px; /* Or use aspect-ratio if supported widely enough */
+    width: 100%;
+    padding: var(--space-4);
+    background-color: var(--theme-background-content);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--theme-shadow);
+}
+
+.chart-loading-container,
+.chart-empty-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    width: 100%;
+    padding: var(--space-4);
+    background-color: var(--theme-background-content);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--theme-shadow);
+    color: var(--theme-text-muted);
+}

@@ -1,0 +1,167 @@
+/* src/pages/admin/AdminLogsPage.css */
+
+.admin-logs-page .dashboard-page-header {
+    display: flex;
+    flex-direction: column; /* Stack on small screens */
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+  }
+  
+  .admin-logs-page .dashboard-page-header h1 {
+    margin-bottom: 0;
+  }
+  
+  .admin-logs-page .dashboard-page-header p {
+    font-size: var(--font-size-base);
+    color: var(--theme-text-secondary);
+    margin-top: 0;
+  }
+  
+  @media (min-width: 768px) {
+    .admin-logs-page .dashboard-page-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .admin-logs-page .dashboard-page-header p {
+      margin-top: 0;
+    }
+  }
+  
+  /* Filter Card Styles */
+  .admin-logs-page .filter-card {
+    margin-bottom: var(--space-6);
+  }
+  
+  .admin-logs-page .filter-card .card-body {
+    padding: var(--space-4);
+  }
+  
+  .admin-logs-page .logs-filter-form { /* Specific to this page's filter form */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsive columns for filters */
+    gap: var(--space-4);
+    align-items: flex-end; /* Aligns button nicely with input fields */
+  }
+  
+  .admin-logs-page .logs-filter-form .input-field-wrapper,
+  .admin-logs-page .logs-filter-form select.input-field {
+    margin-bottom: 0; /* Remove default bottom margin from InputField if form has gap */
+  }
+  
+  .admin-logs-page .logs-filter-form button[type="submit"] {
+    padding-top: var(--space-2); /* Match InputField padding */
+    padding-bottom: var(--space-2);
+    /* height: 40px; /* Example to match input height if needed */
+  }
+  
+  
+  /* Logs Table Card Styles */
+  .admin-logs-page .table-card .card-body {
+    padding: 0; /* Table might have its own spacing or fills card */
+  }
+  
+  /* Table specific styles, if any, beyond common Table.css */
+  .admin-logs-page .table-main th,
+  .admin-logs-page .table-main td {
+    /* Example: Smaller padding for dense log view */
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-sm); /* Slightly smaller font for logs */
+  }
+  .admin-logs-page .table-main td {
+    word-break: break-word; /* Prevent long messages from breaking layout */
+  }
+  
+  
+  /* Log Level Badges */
+  .admin-logs-page .log-level {
+    padding: 2px 8px; /* Smaller padding */
+    border-radius: var(--border-radius-sm); /* Sharper radius */
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold); /* Bolder for emphasis */
+    text-transform: uppercase;
+    display: inline-block;
+    border: 1px solid transparent;
+    min-width: 70px; /* Ensure a minimum width for alignment */
+    text-align: center;
+  }
+  
+  .admin-logs-page .log-level.log-info {
+    background-color: var(--color-info-bg);
+    color: var(--color-info-text);
+    border-color: var(--color-info-DEFAULT);
+  }
+  .admin-logs-page .log-level.log-user_action { /* Assuming user_action is a level string */
+    background-color: var(--theme-primary-main)20; /* Light primary */
+    color: var(--theme-primary-main);
+    border-color: var(--theme-primary-main);
+  }
+  .admin-logs-page .log-level.log-admin_action { /* Assuming admin_action is a level string */
+    background-color: #e9d5ffaa; /* Light purple example */
+    color: #5b21b6;
+    border-color: #5b21b6;
+  }
+  .admin-logs-page .log-level.log-system_event { /* Assuming system_event is a level string */
+    background-color: #d1fae5aa; /* Light green example */
+    color: #047857;
+    border-color: #047857;
+  }
+  .admin-logs-page .log-level.log-warn {
+    background-color: var(--color-warning-bg);
+    color: var(--color-warning-text);
+    border-color: var(--color-warning-DEFAULT);
+  }
+  .admin-logs-page .log-level.log-error {
+    background-color: var(--color-error-bg);
+    color: var(--color-error-text);
+    border-color: var(--color-error-DEFAULT);
+  }
+  .admin-logs-page .log-level.log-fatal {
+    background-color: #4A0404; /* Dark red */
+    color: white;
+    border-color: #3B0303;
+  }
+  .admin-logs-page .log-level.log-debug {
+    background-color: var(--theme-background-secondary);
+    color: var(--theme-text-muted);
+    border-color: var(--theme-border-secondary);
+  }
+  
+  
+  /* Pagination Controls (reusable class from other admin pages) */
+  .admin-logs-page .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding: var(--space-4) 0;
+  }
+  .admin-logs-page .pagination-controls span {
+    font-size: var(--font-size-sm);
+    color: var(--theme-text-secondary);
+  }
+  
+  
+  /* Page Loading / Error / No Data States (reusable classes) */
+  .admin-logs-page .page-loading,
+  .admin-logs-page .page-error,
+  .admin-logs-page .no-data-message /* If table is empty */ {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12) var(--space-4);
+    text-align: center;
+    min-height: 300px;
+  }
+  .admin-logs-page .page-error {
+    color: var(--color-error-DEFAULT);
+  }
+  .admin-logs-page .page-error button {
+    margin-top: var(--space-4);
+  }
+  .admin-logs-page .no-data-message {
+    color: var(--theme-text-muted);
+    font-style: italic;
+  }

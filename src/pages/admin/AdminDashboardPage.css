@@ -1,0 +1,90 @@
+/* src/pages/admin/AdminDashboardPage.css */
+
+.admin-dashboard-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8); /* Spacing between major sections */
+  }
+  
+  .admin-dashboard-page .dashboard-page-header {
+    margin-bottom: 0; /* Header itself doesn't need huge bottom margin if sections have top */
+  }
+  .admin-dashboard-page .dashboard-page-header h1 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-1);
+  }
+  .admin-dashboard-page .dashboard-page-header p {
+    font-size: var(--font-size-md);
+    color: var(--theme-text-secondary);
+  }
+  
+  /* Metrics Grid (reusing from user dashboard or define admin-specific) */
+  .admin-dashboard-page .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Allow more cards */
+    gap: var(--space-6);
+  }
+  /* MetricCard itself is styled in its own CSS or common dashboard CSS */
+  
+  
+  /* Charts Grid */
+  .admin-charts-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Stack on small screens */
+    gap: var(--space-6);
+  }
+  
+  /* Two columns for medium screens and up */
+  @media (min-width: 768px) {
+    .admin-charts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* Ensure chart cards have a decent height and padding for the chart component */
+  .admin-charts-grid .chart-card {
+    /* Common Card component provides base styling */
+  }
+  .admin-charts-grid .chart-card .card-body {
+    padding: var(--space-4); /* Adjust if ChartComponent needs different padding */
+  }
+  .admin-charts-grid .chart-card .chart-container { /* Class from ChartComponent.jsx */
+    height: 320px; /* Good default height for dashboard charts */
+  }
+  .admin-charts-grid .no-chart-data {
+      text-align: center;
+      padding: var(--space-8) 0;
+      color: var(--theme-text-muted);
+      font-style: italic;
+  }
+  
+  .admin-quick-stats-card .card-body p {
+      margin-bottom: var(--space-2);
+      font-size: var(--font-size-base);
+  }
+  .admin-quick-stats-card .card-body p strong {
+      color: var(--theme-text-primary);
+      font-weight: var(--font-weight-medium);
+  }
+  
+  
+  /* Loading, Error, No Data states (can be global or page-specific) */
+  .admin-dashboard-loading,
+  .admin-dashboard-error,
+  .admin-dashboard-no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh; /* Take up significant portion of the page */
+    text-align: center;
+    padding: var(--space-8);
+  }
+  .admin-dashboard-error {
+    color: var(--color-error-DEFAULT);
+  }
+  .admin-dashboard-no-data,
+  .admin-dashboard-loading .spinner-message { /* If spinner has a message prop */
+    color: var(--theme-text-muted);
+    font-size: var(--font-size-lg);
+  }

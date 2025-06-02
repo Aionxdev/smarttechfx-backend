@@ -1,0 +1,54 @@
+/* src/components/common/Spinner.css */
+.spinner-container {
+    display: inline-flex; /* Or 'flex' if it should take up block space */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner {
+  display: inline-block;
+  border-style: solid;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite; /* Using spin from _animations.css */
+  border-right-color: transparent !important; /* Important to override other border colors for the spinning effect */
+}
+
+/* Sizes (border-width and width/height) */
+.spinner-xs { width: 0.75rem; height: 0.75rem; border-width: 1px; } /* 12px */
+.spinner-sm { width: 1rem; height: 1rem; border-width: 2px; }     /* 16px */
+.spinner-md { width: 1.5rem; height: 1.5rem; border-width: 2px; } /* 24px - Default */
+.spinner-lg { width: 2.5rem; height: 2.5rem; border-width: 3px; } /* 40px */
+.spinner-xl { width: 4rem; height: 4rem; border-width: 4px; }     /* 64px */
+
+/* Colors (border-color for the main part of the spinner) */
+.spinner-color-primary {
+  border-color: var(--theme-primary-main);
+}
+.spinner-color-accent {
+  border-color: var(--theme-accent-green); /* Or your primary accent */
+}
+.spinner-color-white {
+  border-color: #ffffff;
+}
+/* The border-right-color: transparent !important; handles the "gap" in the spinner */
+
+
+.spinner-message {
+    font-size: var(--font-size-sm);
+    color: var(--theme-text-secondary);
+    margin-top: var(--space-2);
+}
+
+/* sr-only class should be defined in _utilities.css or _base.css */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

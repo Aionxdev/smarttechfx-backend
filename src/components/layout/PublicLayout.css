@@ -1,0 +1,13 @@
+/* src/components/layout/PublicLayout.css */
+.public-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure footer stays at bottom if content is short */
+  }
+  
+  .public-main-content {
+    flex-grow: 1; /* Takes up available space */
+    /* Add padding here if you want consistent padding for all public pages,
+       or handle padding within individual page components */
+    padding: 0 var(--space-4); /* Example horizontal padding */
+  }

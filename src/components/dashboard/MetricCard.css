@@ -1,0 +1,110 @@
+/* src/components/dashboard/MetricCard.css */
+.metric-card {
+    /* Uses common Card styles. Add specific metric card styles here */
+    min-height: 120px; /* Ensure a minimum height */
+  }
+  .metric-card.clickable {
+      cursor: pointer;
+      transition: var(--transition-fast);
+  }
+  .metric-card.clickable:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+  }
+  
+  
+  .metric-card .card-body { /* Override Card's body padding if needed */
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Distribute space */
+  }
+  
+  .metric-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align title and icon to top */
+    margin-bottom: var(--space-2);
+  }
+  
+  .metric-title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--theme-text-secondary);
+    margin: 0;
+  }
+  
+  .metric-icon {
+    color: var(--theme-primary-main); /* Or a specific icon color */
+    /* font-size: var(--font-size-xl); */ /* If using font icons */
+  }
+  .metric-icon svg {
+      width: 24px; /* Example size for SVG icons */
+      height: 24px;
+  }
+  
+  
+  .metric-info-tooltip {
+      color: var(--theme-text-muted);
+      cursor: help;
+      margin-left: var(--space-1);
+  }
+  
+  .metric-value {
+    font-size: var(--font-size-2xl); /* Large value display */
+    font-weight: var(--font-weight-bold);
+    color: var(--theme-text-primary);
+    margin: 0;
+    line-height: 1.2;
+  }
+  
+  .metric-value-loading {
+      width: 70%;
+      height: var(--font-size-2xl);
+      background-color: var(--theme-background-hover);
+      border-radius: var(--border-radius-sm);
+      animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; /* From _animations.css */
+      margin-bottom: var(--space-1); /* Space for change percentage skeleton */
+  }
+  .metric-card .metric-value-loading + span { /* For change % skeleton */
+      width: 50%;
+      height: var(--font-size-sm);
+      background-color: var(--theme-background-hover);
+      border-radius: var(--border-radius-sm);
+      animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      animation-delay: 0.2s;
+  }
+  
+  
+  .metric-change {
+    font-size: var(--font-size-xs);
+    display: flex;
+    align-items: center;
+    margin-top: var(--space-1);
+  }
+  
+  .metric-change.positive {
+    color: var(--color-success-DEFAULT);
+  }
+  .metric-change.negative {
+    color: var(--color-error-DEFAULT);
+  }
+  .metric-change svg { /* For lucide icons */
+      margin-right: var(--space-05, 2px);
+  }
+  
+  .metric-change-period {
+    color: var(--theme-text-muted);
+    margin-left: var(--space-1);
+  }
+
+.metric-card-success .metric-value, /* If applying class to card */
+.metric-value.text-success { /* If applying class directly to value */
+  color: var(--color-success-DEFAULT);
+}
+
+.metric-card-danger .metric-value,
+.metric-value.text-danger {
+  color: var(--color-error-DEFAULT);
+}
+/* Add .metric-card-warning, .metric-card-info etc. if needed */

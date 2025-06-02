@@ -1,0 +1,91 @@
+/* src/pages/user/FaqPage.css */
+
+.static-page-header {
+  padding: var(--space-4) 0; /* Vertical padding, no horizontal as it's full width */
+  text-align: center;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--theme-text-primary);
+}
+
+.faq-list {
+    max-width: 800px; /* Or full width of static-page-content */
+    margin: 0 auto; /* Center if narrower */
+  }
+  
+  .faq-item {
+    border-bottom: 1px solid var(--theme-border-divider);
+    margin-bottom: var(--space-3);
+  }
+  .faq-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: var(--space-4) 0; /* Vertical padding, no horizontal as it's full width */
+    font-size: var(--font-size-md); /* Or lg */
+    font-weight: var(--font-weight-medium);
+    color: var(--theme-text-primary);
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .faq-question:hover {
+    color: var(--theme-primary-main);
+  }
+  
+  .faq-icon {
+    font-size: var(--font-size-lg); /* For + / - icons */
+    color: var(--theme-primary-main);
+    transition: transform 0.3s ease-in-out;
+    margin-left: var(--space-3);
+  }
+  .faq-item.open .faq-icon {
+    transform: rotate(135deg); /* Rotates + to look like x or part of an arrow */
+    /* If using Chevron: transform: rotate(180deg); */
+  }
+  
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0), /* Smooth open/close */
+                padding-top 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0),
+                padding-bottom 0.4s cubic-bezier(0.25, 0.1, 0.25, 1.0),
+                opacity 0.3s ease-in-out;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    /* visibility: hidden; */ /* Using max-height and opacity for transition */
+  }
+  
+  .faq-item.open .faq-answer {
+    max-height: 1000px; /* Large enough to accommodate content */
+    opacity: 1;
+    padding-top: var(--space-2); /* Add padding when open */
+    padding-bottom: var(--space-4);
+    /* visibility: visible; */
+  }
+  
+  .faq-answer-content {
+    font-size: var(--font-size-base);
+    color: var(--theme-text-secondary);
+    line-height: var(--line-height-relaxed);
+  }
+  .faq-answer-content p {
+      margin-bottom: var(--space-3);
+  }
+  .faq-answer-content ul {
+      margin-left: var(--space-4);
+      margin-bottom: var(--space-3);
+  }
+  .faq-answer-content li {
+      margin-bottom: var(--space-1);
+  }

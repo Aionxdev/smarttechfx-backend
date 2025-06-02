@@ -1,0 +1,184 @@
+/* src/components/layout/Footer.css */
+
+/*
+  To make the footer sticky (always at the bottom of the viewport,
+  even if content is short), the main app wrapper and content area
+  need to be structured correctly with flexbox.
+  Assuming your App.jsx has:
+  <div class="app-wrapper" style="display: flex; flex-direction: column; min-height: 100vh;">
+    <Navbar />
+    <main class="public-main-content" style="flex-grow: 1;">...</main> // Or dashboard content
+    <Footer /> // This Footer component
+  </div>
+  The `margin-top: auto;` on .site-footer handles this within a flex column parent.
+*/
+
+.site-footer {
+  background-color: var(--theme-background-sidebar); /* Using the dark sidebar color for a distinct footer */
+  color: var(--theme-text-on-dark-bg, #adb5bd);
+  margin-top: auto; /* <<< KEY FOR STICKY FOOTER in flex layout */
+  padding-top: var(--space-8); /* Generous padding for the main content part */
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.footer-main-content {
+  /* No specific styles needed here unless adding a top border for example */
+}
+
+.footer-container { /* Reusable container class for max-width and centering */
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsive columns */
+  gap: var(--space-6); /* Gap between columns */
+  padding-bottom: var(--space-8);
+}
+
+.footer-column {
+  /* Basic styling for columns */
+}
+
+.footer-logo {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: #fff; /* Brighter for logo */
+  margin-bottom: var(--space-3);
+  text-decoration: none;
+}
+
+.footer-tagline {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+  margin-bottom: var(--space-4);
+}
+
+.footer-column-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: #fff; /* Brighter titles */
+  margin-bottom: var(--space-4);
+  position: relative;
+  padding-bottom: var(--space-2);
+}
+/* Underline effect for column titles */
+.footer-column-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px; /* Short underline */
+  height: 2px;
+  background-color: var(--theme-primary-main); /* Use accent color */
+}
+
+
+.footer-link-list,
+.footer-contact-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.footer-link-list li,
+.footer-contact-list li {
+  margin-bottom: var(--space-2);
+}
+
+.footer-link-list a,
+.footer-contact-list span, /* For icon + text items */
+.footer-contact-list a {
+  color: var(--theme-text-on-dark-bg, #adb5bd);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  display: flex; /* For aligning icons with text in contact list */
+  align-items: center;
+  gap: var(--space-2);
+}
+.footer-link-list a:hover,
+.footer-contact-list a:hover {
+  color: #fff; /* Brighter on hover */
+  text-decoration: underline;
+}
+.footer-contact-list .icon-placeholder,
+.footer-contact-list svg { /* If using lucide-react icons */
+  flex-shrink: 0; /* Prevent icon from shrinking */
+  color: var(--theme-primary-main); /* Accent color for icons */
+}
+
+
+.footer-crypto-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.crypto-icon-footer {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly visible background for icons */
+  color: #fff; /* For text based placeholders */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xs);
+  /* transition: transform 0.2s ease; */
+}
+.crypto-icon-footer img { /* If using actual image tags */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+/* .crypto-icon-footer:hover { transform: scale(1.15); } */
+
+
+/* Footer Bottom Bar */
+.footer-bottom {
+  background-color: rgba(0,0,0, 0.2); /* Slightly darker or different shade for bottom bar */
+  padding: var(--space-4) 0;
+  margin-top: var(--space-6); /* Space above bottom bar if grid doesn't fill */
+}
+
+.footer-copyright {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  opacity: 0.8;
+}
+.footer-copyright .footer-separator {
+  margin: 0 var(--space-2);
+}
+
+
+/* Responsive adjustments for footer grid */
+@media (max-width: 767px) {
+  .footer-grid {
+    grid-template-columns: 1fr; /* Stack columns on mobile */
+    text-align: center; /* Center content of columns */
+  }
+  .footer-column-title::after { /* Center title underline */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .footer-link-list,
+  .footer-contact-list {
+    align-items: center; /* If items are flex, center them */
+  }
+  .footer-contact-list li {
+    justify-content: center; /* Center icon and text if they are flex */
+  }
+  .footer-crypto-icons {
+    justify-content: center;
+  }
+  .footer-main-content {
+    padding-bottom: var(--space-4); /* Less padding before bottom bar on mobile */
+  }
+}

@@ -1,0 +1,7 @@
+/* ... (shared styles for header, table-card, pagination-controls) ... */
+.status-badge.status-withdrawal-pending { background-color: var(--color-warning-bg); color: var(--color-warning-text); }
+.status-badge.status-withdrawal-approved { background-color: var(--color-info-bg); color: var(--color-info-text); }
+.status-badge.status-withdrawal-processing { background-color: var(--theme-primary-main)20; color: var(--theme-primary-main); }
+.status-badge.status-withdrawal-completed { background-color: var(--color-success-bg); color: var(--color-success-text); }
+.status-badge.status-withdrawal-rejected, .status-badge.status-withdrawal-cancelled { background-color: var(--color-error-bg); color: var(--color-error-text); }
+.address-truncate, .txid-truncate { /* From WithdrawPage.css or global */ }

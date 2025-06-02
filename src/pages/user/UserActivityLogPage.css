@@ -1,0 +1,22 @@
+/* src/pages/user/UserActivityLogPage.css */
+.user-activity-log-page .dashboard-page-header {
+    margin-bottom: var(--space-6);
+}
+
+.user-activity-log-page .table-card .card-body {
+    padding: 0; /* If Table component handles its own internal padding well */
+}
+
+.user-activity-log-page .no-data-message {
+    text-align: center;
+    padding: var(--space-8) 0;
+    color: var(--theme-text-muted);
+}
+
+.user-activity-log-page .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+}

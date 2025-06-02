@@ -1,0 +1,13 @@
+/* src/pages/admin/AdminPlanManagementPage.css */
+.admin-plan-management-page .dashboard-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6); }
+.table-card .card-body { padding: 0; } /* If table has its own padding */
+.table-actions { display: flex; gap: var(--space-2); }
+.status-active { color: var(--color-success-DEFAULT); font-weight: bold; }
+.status-inactive { color: var(--color-error-DEFAULT); font-weight: bold; }
+.pagination-controls { display: flex; justify-content: center; align-items: center; gap: var(--space-3); margin-top: var(--space-6); }
+.modal-message { /* Styles from MyPlansPage.css or global */ }
+.modal-actions { /* Styles from MyPlansPage.css or global */ }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.form-checkbox-group { display: flex; gap: var(--space-4); align-items: center; margin: var(--space-2) 0; }
+.form-checkbox-group label { display: flex; align-items: center; gap: var(--space-1); font-size: var(--font-size-sm); }
+.form-checkbox-group input[type="checkbox"] { accent-color: var(--theme-primary-main); }

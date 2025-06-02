@@ -1,0 +1,114 @@
+/* src/styles/_variables.css */
+
+:root {
+    /* Font Families */
+    --font-primary: 'Inter', 'Poppins', 'Open Sans', sans-serif; /* Primary font stack */
+    --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; /* For code or mono data */
+  
+    /* Base Font Sizes */
+    --font-size-xs: 0.75rem;  /* 12px */
+    --font-size-sm: 0.875rem; /* 14px */
+    --font-size-base: 1rem;   /* 16px (root font size) */
+    --font-size-md: 1.125rem; /* 18px */
+    --font-size-lg: 1.25rem;  /* 20px */
+    --font-size-xl: 1.5rem;   /* 24px */
+    --font-size-2xl: 1.875rem;/* 30px */
+    --font-size-3xl: 2.25rem; /* 36px */
+    --font-size-4xl: 3rem;    /* 48px */
+  
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+  
+    /* Line Heights */
+    --line-height-tight: 1.25;
+    --line-height-snug: 1.375;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.625;
+    --line-height-loose: 2;
+  
+    /* Spacing Units (based on 4px or 8px grid if preferred) */
+    --space-1: 0.25rem; /* 4px */
+    --space-2: 0.5rem;  /* 8px */
+    --space-3: 0.75rem; /* 12px */
+    --space-4: 1rem;    /* 16px */
+    --space-5: 1.25rem; /* 20px */
+    --space-6: 1.5rem;  /* 24px */
+    --space-8: 2rem;    /* 32px */
+    --space-10: 2.5rem; /* 40px */
+    --space-12: 3rem;   /* 48px */
+    --space-16: 4rem;   /* 64px */
+    --space-20: 5rem;   /* 80px */
+  
+    /* Border Radius */
+    --border-radius-sm: 0.125rem; /* 2px */
+    --border-radius-md: 0.25rem;  /* 4px */
+    --border-radius-lg: 0.5rem;   /* 8px */
+    --border-radius-xl: 1rem;     /* 16px */
+    --border-radius-full: 9999px;
+  
+    /* Box Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+    /* Z-Indexes */
+    --z-index-dropdown: 1000;
+    --z-index-sticky: 1020;
+    --z-index-modal-backdrop: 1040;
+    --z-index-modal: 1050;
+    --z-index-popover: 1060;
+    --z-index-tooltip: 1070;
+    --z-index-notification: 1100; /* For toast notifications */
+  
+    /* Transitions */
+    --transition-fast: all 0.15s ease-in-out;
+    --transition-normal: all 0.3s ease-in-out;
+  
+    /* Colors - These will be overridden by _theme.css */
+    /* Define base color names here, then define their light/dark values in _theme.css */
+    /* Primary Colors (Blueprint: Deep Blue / Dark Grey) */
+    --color-primary-DEFAULT: #2563eb; /* Example blue, override in theme */
+    --color-primary-hover: #1d4ed8;
+    --color-primary-active: #1e40af;
+    --color-primary-text: #ffffff; /* Text on primary background */
+  
+    /* Accent Colors (Blueprint: Electric Green / Neon Blue) */
+    --color-accent-green-DEFAULT: #34d399; /* Example green */
+    --color-accent-blue-DEFAULT: #3b82f6;  /* Example neon-ish blue */
+  
+    /* Grayscale & Text Colors (Blueprint: Dark Grey background) */
+    --color-text-primary: #111827; /* For light theme */
+    --color-text-secondary: #6b7280;
+    --color-text-subtle: #9ca3af;
+    --color-text-disabled: #d1d5db;
+    --color-text-on-dark: #f3f4f6; /* For dark theme text */
+  
+    --color-background-primary: #ffffff; /* For light theme */
+    --color-background-secondary: #f3f4f6;
+    --color-background-card: #ffffff;
+    --color-background-tooltip: #1f2937; /* Dark tooltip often looks good on both themes */
+  
+    --color-border-primary: #e5e7eb;
+    --color-border-secondary: #d1d5db;
+    --color-border-input: #cbd5e1;
+  
+    /* Semantic Colors */
+    --color-success-DEFAULT: #10b981;
+    --color-success-bg: #ecfdf5;
+    --color-success-text: #065f46;
+    --color-error-DEFAULT: #ef4444;
+    --color-error-bg: #fef2f2;
+    --color-error-text: #991b1b;
+    --color-warning-DEFAULT: #f59e0b;
+    --color-warning-bg: #fffbeb;
+    --color-warning-text: #92400e;
+    --color-info-DEFAULT: #3b82f6;
+    --color-info-bg: #eff6ff;
+    --color-info-text: #1d4ed8;
+  }

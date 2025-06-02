@@ -1,0 +1,84 @@
+/* src/pages/StaticPage.css */
+.static-page-container {
+    max-width: 900px; /* Or your preferred content width for text-heavy pages */
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-4); /* Top/bottom and side padding */
+    color: var(--theme-text-primary);
+    line-height: var(--line-height-relaxed);
+  }
+  
+  .static-page-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--theme-border-divider);
+  }
+  
+  .static-page-header h1 {
+    font-size: var(--font-size-3xl);
+    color: var(--theme-primary-main); /* Or text primary */
+    margin-bottom: var(--space-2);
+  }
+  
+  .static-page-header .last-updated {
+    font-size: var(--font-size-sm);
+    color: var(--theme-text-muted);
+  }
+  
+  .static-page-content article h2 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--theme-text-primary);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--theme-border-secondary);
+  }
+  .static-page-content article h2:first-of-type {
+      margin-top: 0; /* No top margin for the very first h2 */
+  }
+  
+  
+  .static-page-content article h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--theme-text-primary);
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+  }
+  
+  .static-page-content article p {
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-base); /* Ensure readability */
+  }
+  
+  .static-page-content article ul,
+  .static-page-content article ol {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-6); /* Standard list indentation */
+  }
+  
+  .static-page-content article li {
+    margin-bottom: var(--space-2);
+  }
+  
+  .static-page-content article a {
+    color: var(--theme-primary-main);
+    text-decoration: underline;
+  }
+  .static-page-content article a:hover {
+    color: var(--theme-primary-hover);
+  }
+  
+  .static-page-content article strong {
+      font-weight: var(--font-weight-semibold);
+  }
+  
+  .static-page-content article blockquote {
+      margin: var(--space-4) var(--space-8);
+      padding: var(--space-3) var(--space-4);
+      border-left: 4px solid var(--theme-border-primary);
+      background-color: var(--theme-background-secondary);
+      font-style: italic;
+      color: var(--theme-text-secondary);
+  }

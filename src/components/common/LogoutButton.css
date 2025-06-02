@@ -1,0 +1,42 @@
+/* src/components/auth/LogoutButton.css */
+
+/* Styling for the trigger button if it needs specifics beyond common Button.css */
+.logout-trigger-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1); /* Space between icon and text */
+}
+
+.logout-trigger-button .logout-icon {
+    /* Specific styling for the icon within the button if needed */
+}
+.logout-trigger-button .logout-text {
+    /* Specific styling for the text if needed */
+}
+
+
+/* Styling for the content within the Modal */
+.logout-confirmation-content {
+    padding: var(--space-2) 0;
+}
+
+.logout-confirmation-content p {
+    font-size: var(--font-size-base);
+    color: var(--theme-text-secondary);
+    text-align: center;
+    margin: 0; /* Remove default paragraph margin */
+    line-height: var(--line-height-relaxed);
+}
+
+.logout-modal-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: var(--space-3);
+    margin-top: var(--space-6); /* Space above the buttons */
+    padding-top: var(--space-4); /* Space if there's a border from modal footer */
+}
+
+/* Ensure modal buttons have enough spacing or take full width on mobile if desired */
+.logout-modal-actions .btn {
+    min-width: 100px; /* Ensure buttons have a decent minimum width */
+}

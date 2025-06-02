@@ -1,0 +1,149 @@
+/* src/pages/admin/AdminUserManagementPage.css */
+
+.admin-user-management-page .dashboard-page-header {
+    display: flex;
+    flex-direction: column; /* Stack on small screens */
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+  }
+  
+  .admin-user-management-page .dashboard-page-header h1 {
+    margin-bottom: 0; /* Remove default if p is below */
+  }
+  
+  .admin-user-management-page .dashboard-page-header p {
+    font-size: var(--font-size-base);
+    color: var(--theme-text-secondary);
+    margin-top: 0;
+  }
+  
+  @media (min-width: 768px) {
+    .admin-user-management-page .dashboard-page-header {
+      flex-direction: row; /* Side-by-side on larger screens */
+      justify-content: space-between;
+      align-items: center;
+    }
+    .admin-user-management-page .dashboard-page-header p {
+      margin-top: 0;
+    }
+  }
+  
+  
+  /* Filter Card Styles */
+  .admin-user-management-page .filter-card {
+    margin-bottom: var(--space-6);
+  }
+  
+  .admin-user-management-page .filter-card .card-body { /* If Card has a .card-body */
+    padding: var(--space-4);
+  }
+  
+  .admin-user-management-page .filter-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns for filters */
+    gap: var(--space-4);
+    align-items: flex-end; /* Aligns button nicely with input fields */
+  }
+  
+  .admin-user-management-page .filter-form-grid .input-field-wrapper,
+  .admin-user-management-page .filter-form-grid select.input-field {
+    margin-bottom: 0; /* Remove default bottom margin from InputField if form has gap */
+  }
+  
+  .admin-user-management-page .filter-form-grid button[type="submit"] {
+    /* Ensure button aligns well, potentially adjust padding or height if needed */
+    /* height: 40px; /* Example to match typical input height */
+    padding-top: var(--space-2); /* Match InputField padding */
+    padding-bottom: var(--space-2);
+  }
+  
+  
+  /* Users Table Card Styles */
+  .admin-user-management-page .users-table-card .card-body {
+    padding: 0; /* Remove card body padding if table has its own spacing or fills card */
+  }
+  
+  /* Table specific styles, if any, beyond common Table.css */
+  .admin-user-management-page .table-main th,
+  .admin-user-management-page .table-main td {
+    /* Example: Slightly more padding for admin tables */
+    /* padding: var(--space-3) var(--space-4); */
+  }
+  
+  /* Status Badges (can be global or here) - ensure consistency with InvestmentItem.css, etc. */
+  .admin-user-management-page .status-badge {
+    padding: 3px 8px;
+    border-radius: var(--border-radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: capitalize; /* Or uppercase, depending on preference */
+    display: inline-block; /* Ensure padding is applied correctly */
+  }
+  
+  .admin-user-management-page .status-badge.status-active {
+    background-color: var(--color-success-bg);
+    color: var(--color-success-text);
+    border: 1px solid var(--color-success-DEFAULT, transparent);
+  }
+  .admin-user-management-page .status-badge.status-pendingverification,
+  .admin-user-management-page .status-badge.status-pending { /* Generic pending */
+    background-color: var(--color-warning-bg);
+    color: var(--color-warning-text);
+    border: 1px solid var(--color-warning-DEFAULT, transparent);
+  }
+  .admin-user-management-page .status-badge.status-suspended,
+  .admin-user-management-page .status-badge.status-deactivated {
+    background-color: var(--color-error-bg);
+    color: var(--color-error-text);
+    border: 1px solid var(--color-error-DEFAULT, transparent);
+  }
+  .admin-user-management-page .status-badge.status-unknown {
+    background-color: var(--theme-background-secondary);
+    color: var(--theme-text-muted);
+    border: 1px solid var(--theme-border-secondary, transparent);
+  }
+  
+  
+  /* Table Actions Cell */
+  .admin-user-management-page .table-actions {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: flex-start; /* Or center/flex-end */
+  }
+  .admin-user-management-page .table-actions .btn-xs {
+      /* Adjust xs button padding if needed for this context */
+  }
+  
+  
+  /* Pagination Controls (can be global or here) */
+  .admin-user-management-page .pagination-controls {
+    display: flex;
+    justify-content: center; /* Or flex-end */
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding: var(--space-4) 0;
+  }
+  .admin-user-management-page .pagination-controls span {
+      font-size: var(--font-size-sm);
+      color: var(--theme-text-secondary);
+  }
+  
+  
+  /* Page Loading / Error States (can be global or here) */
+  .admin-user-management-page .page-loading,
+  .admin-user-management-page .page-error {
+    display: flex;
+    flex-direction: column; /* If message below spinner */
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12) var(--space-4); /* Significant padding */
+    text-align: center;
+    min-height: 300px; /* Give it some space */
+  }
+  .admin-user-management-page .page-error {
+    color: var(--color-error-DEFAULT);
+  }
+  .admin-user-management-page .page-error button {
+      margin-top: var(--space-4);
+  }

@@ -1,0 +1,22 @@
+/* src/index.css */
+
+/* Import global style partials */
+@import './styles/_variables.css'; /* Must be first or very early for variables to be available */
+@import './styles/_theme.css';    /* Theme overrides for variables */
+@import './styles/_base.css';     /* Base element styling */
+@import './styles/_utilities.css';/* Utility classes */
+@import './styles/_animations.css';/* Animations */
+
+/* You can add any other truly global styles here, but prefer partials */
+
+/* Example: Font Awesome or other icon font setup if not using SVG icons */
+/* @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'); */
+
+/* Example: Import Google Fonts if not using another method */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600;700&display=swap');
+
+/* 
+    Consider adding a CSS reset or normalize.css at the very top if _base.css isn't comprehensive enough.
+    For example, if you install normalize.css (`yarn add normalize.css`): 
+*/
+@import 'normalize.css';

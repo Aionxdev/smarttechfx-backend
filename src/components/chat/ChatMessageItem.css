@@ -1,0 +1,78 @@
+/* src/components/chat/ChatMessageItem.css */
+.chat-message-item-local {
+  display: flex;
+  gap: var(--space-2);
+  max-width: 90%; /* Allow slightly wider messages if only one sided */
+  margin-bottom: var(--space-2);
+}
+
+.chat-message-avatar-local {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--theme-background-secondary);
+  color: var(--theme-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.user-message-local { /* User's own messages in this local preview */
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.user-message-local .chat-message-avatar-local {
+  background-color: var(--theme-primary-main);
+  color: var(--theme-text-on-primary);
+}
+
+.chat-message-content-local {
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100% - 36px); /* Account for avatar */
+}
+
+.chat-message-text-local {
+  background-color: var(--theme-background-secondary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--border-radius-lg);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+  margin-bottom: var(--space-05, 2px);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  color: var(--theme-text-primary);
+}
+
+.user-message-local .chat-message-text-local {
+  background-color: var(--theme-primary-main);
+  color: var(--theme-text-on-primary);
+  border-bottom-right-radius: var(--border-radius-sm); /* "Tail" effect */
+}
+
+.chat-message-timestamp-local {
+  font-size: 0.65rem; /* Smaller timestamp */
+  color: var(--theme-text-muted);
+  margin-top: var(--space-1);
+  align-self: flex-start;
+}
+.user-message-local .chat-message-timestamp-local {
+  align-self: flex-end;
+}
+
+.system-info-message-local .chat-message-content-local {
+  width: 100%;
+}
+.system-info-message-local .chat-message-text-local {
+  background-color: var(--color-info-bg);
+  color: var(--color-info-text);
+  font-style: normal;
+  font-size: var(--font-size-sm);
+  padding: var(--space-2);
+  text-align: center;
+  border: 1px solid var(--color-info-DEFAULT);
+}

@@ -1,0 +1,67 @@
+/* src/pages/user/UserNotificationsPage.css */
+.user-notifications-page .dashboard-page-header { margin-bottom: var(--space-6); }
+.notifications-header { display: flex; justify-content: space-between; align-items: center; }
+
+.no-notifications-message {
+    text-align: center;
+    color: var(--theme-text-muted);
+    padding: var(--space-8) 0;
+    font-size: var(--font-size-md);
+}
+
+.notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.notification-item {
+    /* Card styles will apply */
+    transition: background-color 0.2s ease;
+}
+.notification-item.unread {
+    border-left: 4px solid var(--theme-primary-main); /* Highlight unread */
+    /* background-color: var(--theme-background-hover); */ /* Optional: slightly different bg for unread */
+}
+.notification-item.read {
+    opacity: 0.8; /* Slightly dim read notifications */
+}
+.notification-item .card-body { /* Override card body padding if needed */
+    padding: var(--space-3) var(--space-4);
+}
+
+.notification-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-1);
+}
+.notification-title {
+    font-size: var(--font-size-base); /* Or md */
+    font-weight: var(--font-weight-semibold);
+    color: var(--theme-text-primary);
+    margin: 0;
+}
+.notification-item.read .notification-title {
+    font-weight: var(--font-weight-medium); /* Less emphasis for read */
+}
+
+.notification-time {
+    font-size: var(--font-size-xs);
+    color: var(--theme-text-muted);
+}
+
+.notification-message {
+    font-size: var(--font-size-sm);
+    color: var(--theme-text-secondary);
+    margin-bottom: 0; /* Remove default p margin */
+    line-height: var(--line-height-snug);
+}
+.notification-actions {
+    margin-top: var(--space-2);
+    text-align: right;
+}
+.notification-actions .btn-link {
+    font-size: var(--font-size-xs);
+    padding: var(--space-05, 2px) var(--space-1);
+}

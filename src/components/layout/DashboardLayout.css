@@ -1,0 +1,159 @@
+/* src/components/layout/DashboardLayout.css */
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh; /* Full viewport height */
+    background-color: var(--theme-background-body);
+  }
+  
+  .dashboard-main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s ease-in-out;
+    margin-left: 260px; /* Same as sidebar width */
+    /* background-color: var(--theme-background-body); */ /* Or different main content bg */
+  }
+  
+  .dashboard-layout.sidebar-closed .dashboard-main-content {
+    margin-left: 0; /* Or a smaller width if sidebar is collapsed but visible */
+  }
+  
+  
+  .dashboard-page-content {
+    flex-grow: 1;
+    padding: var(--space-6); /* Main content padding */
+    overflow-y: auto; /* Scroll content if it overflows */
+  }
+  
+  /* Responsive adjustments for main content when sidebar is mobile */
+  @media (max-width: 992px) {
+    .dashboard-main-content {
+      margin-left: 0; /* Sidebar is overlayed, not pushing content */
+      width: 100%;
+    }
+  }
+  
+  /* src/components/layout/Topbar.css */
+  .topbar {
+      height: 60px; /* Match sidebar header / navbar height */
+      background-color: var(--theme-background-navbar); /* Or content background */
+      border-bottom: 1px solid var(--theme-border-divider);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-4);
+      position: sticky;
+      top: 0;
+      z-index: calc(var(--z-index-sticky, 1020) - 5); /* Below sidebar if sidebar is fixed and overlaps */
+      box-shadow: var(--shadow-sm);
+  }
+  
+  .topbar-left, .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+  }
+  
+  .topbar-menu-toggle {
+      background: none;
+      border: none;
+      color: var(--theme-text-primary);
+      font-size: var(--font-size-xl); /* For icon */
+      cursor: pointer;
+      padding: var(--space-1);
+      /* display: none; /* Shown by default, can be hidden on larger screens if sidebar is always open */
+  }
+
+  
+  @media (min-width: 993px) {
+      .topbar-menu-toggle { display: none; }
+  }
+  
+  
+  .topbar-page-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--theme-text-primary);
+  }
+  
+  .topbar-action-btn {
+      background: none;
+      border: none;
+      color: var(--theme-text-secondary);
+      cursor: pointer;
+      position: relative; /* For badges */
+      padding: var(--space-1);
+  }
+  .topbar-action-btn:hover {
+      color: var(--theme-primary-main);
+  }
+  .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: var(--color-error-DEFAULT);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 2px 5px;
+      min-width: 16px;
+      text-align: center;
+  }
+  
+  
+  .topbar-user-menu {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      padding: var(--space-2); /* Make hover area larger */
+      border-radius: var(--border-radius-md);
+  }
+  .topbar-user-menu:hover {
+      background-color: var(--theme-background-hover);
+  }
+  
+  .user-avatar {
+      color: var(--theme-text-secondary); /* Or style for an actual image */
+  }
+  .user-name {
+      font-weight: var(--font-weight-medium);
+      color: var(--theme-text-primary);
+      font-size: var(--font-size-sm);
+  }
+  
+  .user-dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: var(--space-2);
+      background-color: var(--theme-background-content);
+      border: 1px solid var(--theme-border-divider);
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--shadow-lg);
+      min-width: 180px;
+      z-index: var(--z-index-dropdown);
+  }
+  .topbar-user-menu:hover .user-dropdown-content {
+      display: block;
+  }
+  .user-dropdown-content a,
+  .user-dropdown-content button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: var(--space-2) var(--space-3);
+      color: var(--theme-text-primary);
+      text-decoration: none;
+      font-size: var(--font-size-sm);
+      background: none;
+      border: none;
+      cursor: pointer;
+  }
+  .user-dropdown-content a:hover,
+  .user-dropdown-content button:hover {
+      background-color: var(--theme-background-hover);
+  }

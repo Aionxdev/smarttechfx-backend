@@ -1,0 +1,14 @@
+/* src/pages/user/InvestmentDetailsPage.css */
+.investment-details-page .dashboard-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6); }
+.investment-details-page .card { margin-bottom: var(--space-6); }
+.details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-3); font-size: var(--font-size-base); }
+.details-grid p { margin-bottom: var(--space-2); }
+.details-grid p strong { color: var(--theme-text-primary); }
+.status-badge { /* Use styles from InvestmentItem.css or define here */ padding: 3px 8px; border-radius: var(--border-radius-full); font-size: var(--font-size-xs); }
+.status-badge.status-active { background-color: var(--color-success-bg); color: var(--color-success-text); }
+.status-badge.status-matured { background-color: var(--color-info-bg); color: var(--color-info-text); }
+/* ... other status styles ... */
+.txid-display, .wallet-address-display { font-family: var(--font-mono); font-size: var(--font-size-sm); word-break: break-all; }
+.progress-card p { margin-bottom: var(--space-2); }
+.progress-bar-container-large { width: 100%; background-color: var(--theme-background-hover); border-radius: var(--border-radius-md); height: 24px; overflow: hidden; }
+.progress-bar-large { height: 100%; background-color: var(--theme-accent-green); color: #fff; text-align: center; font-size: var(--font-size-sm); line-height: 24px; font-weight: var(--font-weight-medium); transition: width 0.5s ease-in-out; }

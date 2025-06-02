@@ -1,0 +1,97 @@
+/* src/components/auth/AuthForm.css (can be shared by LoginForm and RegisterForm) */
+.auth-form {
+    width: 100%;
+    max-width: 400px; /* Adjust as needed */
+    padding: var(--space-6) var(--space-8);
+    background-color: var(--theme-background-content);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--theme-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4); /* Spacing between elements */
+  }
+  
+  .auth-form-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--theme-text-primary);
+    text-align: center;
+    margin-bottom: var(--space-2); /* Less than default h2 */
+  }
+  
+  .auth-form-subtitle {
+    font-size: var(--font-size-base);
+    color: var(--theme-text-secondary);
+    text-align: center;
+    margin-bottom: var(--space-6);
+  }
+  
+  .auth-form-error-message {
+    background-color: var(--color-error-bg);
+    color: var(--color-error-text);
+    border: 1px solid var(--color-error-DEFAULT);
+    padding: var(--space-3);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-sm);
+    text-align: center;
+  }
+  
+  .auth-form-options {
+    display: flex;
+    justify-content: space-between; /* Or flex-end for forgot password only */
+    align-items: center;
+    font-size: var(--font-size-sm);
+    margin-top: calc(-1 * var(--space-2)); /* Pull up slightly if InputField has bottom margin */
+    margin-bottom: var(--space-2);
+  }
+  
+  .remember-me-label {
+    display: flex;
+    align-items: center;
+    color: var(--theme-text-secondary);
+    cursor: pointer;
+  }
+  .remember-me-label input[type="checkbox"] {
+    margin-right: var(--space-2);
+    accent-color: var(--theme-primary-main); /* Styles the checkbox color */
+  }
+  
+  .forgot-password-link,
+  .auth-switch-link {
+    color: var(--theme-primary-main);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+  }
+  .forgot-password-link:hover,
+  .auth-switch-link:hover {
+    text-decoration: underline;
+  }
+  
+  .auth-submit-button {
+    margin-top: var(--space-2);
+    padding-top: var(--space-3) !important; /* Example for larger button */
+    padding-bottom: var(--space-3) !important;
+    font-size: var(--font-size-md) !important;
+  }
+  
+  .auth-form-switch {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--theme-text-secondary);
+    margin-top: var(--space-4);
+  }
+
+
+  /* Add to AuthForm.css or a new RegisterForm.css */
+.auth-form-success-message {
+  background-color: var(--color-success-bg);
+  color: var(--color-success-text);
+  border: 1px solid var(--color-success-DEFAULT);
+  padding: var(--space-3);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+/* Style for select element to match InputField if needed */
+/* .input-field-wrapper select.input-field { ... } */

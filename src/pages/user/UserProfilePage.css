@@ -1,0 +1,37 @@
+/* src/pages/user/UserProfilePage.css */
+.user-profile-page .dashboard-page-header { margin-bottom: var(--space-6); }
+.form-global-message { padding: var(--space-3); border-radius: var(--border-radius-md); margin-bottom: var(--space-4); text-align: center; }
+.form-global-message.success { background-color: var(--color-success-bg); color: var(--color-success-text); border: 1px solid var(--color-success-DEFAULT); }
+.form-global-message.error { background-color: var(--color-error-bg); color: var(--color-error-text); border: 1px solid var(--color-error-DEFAULT); }
+.form-global-message.info { background-color: var(--color-info-bg); color: var(--color-info-text); border: 1px solid var(--color-info-DEFAULT); }
+
+.profile-tabs { display: flex; gap: var(--space-1); margin-bottom: var(--space-6); border-bottom: 1px solid var(--theme-border-divider); }
+.profile-tabs .btn { border-radius: var(--border-radius-md) var(--border-radius-md) 0 0; border-bottom-color: transparent; }
+.profile-tabs .btn-primary { background-color: var(--theme-background-content); color: var(--theme-primary-main); border-color: var(--theme-border-divider); border-bottom-color: var(--theme-background-content); position: relative; bottom: -1px; }
+.profile-tabs .btn-ghost { color: var(--theme-text-secondary); }
+.profile-tabs .btn-ghost:hover { background-color: var(--theme-background-hover); }
+
+.profile-tab-content .card { margin-bottom: var(--space-6); }
+.profile-tab-content .card form { display: flex; flex-direction: column; gap: var(--space-4); }
+
+.payout-wallets-list .payout-wallet-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--theme-border-divider);
+    font-size: var(--font-size-base);
+}
+.payout-wallets-list .payout-wallet-item:last-child { border-bottom: none; }
+.payout-wallets-list .payout-wallet-item strong { color: var(--theme-text-primary); min-width: 60px; }
+.payout-wallets-list .payout-wallet-item span {
+    color: var(--theme-text-secondary);
+    font-family: var(--font-mono);
+    word-break: break-all;
+    flex-grow: 1;
+    margin: 0 var(--space-3);
+}
+.modal-actions { margin-top: var(--space-4); display: flex; justify-content: flex-end; gap: var(--space-2); }
+.modal-message.success { color: var(--color-success-DEFAULT); }
+.modal-message.error { color: var(--color-error-DEFAULT); }
+.modal-message.info { color: var(--theme-text-secondary); }

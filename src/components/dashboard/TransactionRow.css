@@ -1,0 +1,40 @@
+/* src/components/dashboard/TransactionRow.css */
+/* This CSS is for when TransactionRow is used to render <tr> directly.
+   If TransactionRow is a div-based list item, styles would be different.
+   Assuming it's used within the <tbody> of the common Table component. */
+
+   .transaction-row td {
+    /* Inherits from Table.css, add specifics if needed */
+    vertical-align: middle;
+  }
+  
+  .type-icon {
+    margin-right: var(--space-1);
+  }
+  .type-icon.deposit, .type-icon.roipayout { color: var(--color-success-DEFAULT); }
+  .type-icon.withdrawal { color: var(--color-error-DEFAULT); }
+  
+  
+  .amount-credit {
+    color: var(--color-success-DEFAULT);
+    font-weight: var(--font-weight-medium);
+  }
+  .amount-debit {
+    color: var(--color-error-DEFAULT);
+    font-weight: var(--font-weight-medium);
+  }
+  
+  .status-indicator {
+    padding: var(--space-05, 2px) var(--space-2);
+    border-radius: var(--border-radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+  .status-indicator.success { background-color: var(--color-success-bg); color: var(--color-success-text); }
+  .status-indicator.pending { background-color: var(--color-warning-bg); color: var(--color-warning-text); }
+  .status-indicator.error { background-color: var(--color-error-bg); color: var(--color-error-text); }
+  .status-indicator.default { background-color: var(--theme-background-secondary); color: var(--theme-text-secondary); }

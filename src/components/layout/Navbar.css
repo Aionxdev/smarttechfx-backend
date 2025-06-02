@@ -1,0 +1,318 @@
+/* src/components/layout/Navbar.css */
+.navbar {
+  background-color: var(--theme-background-navbar);
+  color: var(--theme-text-primary);
+  padding: 0 var(--space-4); /* Horizontal padding */
+  height: 65px; /* Standard height */
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-index-sticky);
+  border-bottom: 1px solid var(--theme-border-divider);
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: 1280px; /* Or your preferred max width */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+.navbar-logo .logo-img {
+  height: 32px; /* Adjust */
+  width: auto;
+}
+.navbar-logo .logo-text {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--theme-primary-main); /* Or theme-text-primary */
+}
+
+/* Desktop Navigation */
+.navbar-menu-desktop {
+  list-style: none;
+  display: none; /* Hidden by default, shown via media query */
+  align-items: center;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 992px) { /* Show desktop menu on larger screens */
+  .navbar-menu-desktop {
+    display: flex;
+  }
+}
+
+.nav-link { /* Common style for NavLink */
+  color: var(--theme-text-secondary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-2) var(--space-1); /* Vertical padding for hover area */
+  position: relative;
+  transition: color 0.2s ease;
+}
+.nav-link:hover {
+  color: var(--theme-primary-main);
+}
+.nav-link.active {
+  color: var(--theme-primary-main);
+  font-weight: var(--font-weight-semibold);
+}
+.navbar-menu-desktop .nav-link.active::after { /* Underline for active desktop link */
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--theme-primary-main);
+}
+
+
+/* Desktop Actions */
+.navbar-actions-desktop {
+  display: none; /* Hidden by default, shown via media query */
+  align-items: center;
+  gap: var(--space-3);
+}
+@media (min-width: 992px) {
+  .navbar-actions-desktop {
+    display: flex;
+  }
+}
+
+.theme-toggle-btn, .nav-icon-btn {
+  background: none;
+  border: none;
+  color: var(--theme-text-secondary);
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-toggle-btn:hover, .nav-icon-btn:hover {
+  color: var(--theme-primary-main);
+  background-color: var(--theme-background-hover);
+}
+.nav-icon-btn {
+    position: relative; /* For notification badge */
+}
+.notification-badge { /* From Topbar.css previously, good to have here if Navbar handles it */
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background-color: var(--color-error-DEFAULT);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 1px 4px;
+    min-width: 14px;
+    height: 14px;
+    line-height: 12px;
+    text-align: center;
+    border: 1px solid var(--theme-background-navbar);
+}
+
+
+.user-menu-dropdown-container {
+  position: relative;
+}
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--border-radius-md);
+}
+.user-menu-trigger:hover {
+    background-color: var(--theme-background-hover);
+}
+.user-menu-trigger .user-avatar { /* Assuming lucide UserCircle */
+    color: var(--theme-text-secondary);
+}
+.user-menu-trigger .user-name-nav {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--theme-text-primary);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: calc(100% + var(--space-2)); /* Below the trigger */
+  right: 0;
+  background-color: var(--theme-background-content);
+  border: 1px solid var(--theme-border-divider);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  min-width: 200px;
+  z-index: var(--z-index-dropdown);
+  padding: var(--space-1) 0; /* Padding for items */
+}
+.user-menu-dropdown-container:hover .dropdown-content,
+.user-menu-dropdown-container .user-menu-trigger:focus + .dropdown-content, /* For keyboard accessibility */
+.user-menu-dropdown-container .dropdown-content:hover { /* Keep open when hovering dropdown */
+  display: block;
+}
+
+.dropdown-link, .logout-btn-desktop {
+  display: flex; /* Align icon and text */
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  color: var(--theme-text-primary);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.dropdown-link:hover, .logout-btn-desktop:hover {
+  background-color: var(--theme-background-hover);
+  color: var(--theme-primary-main);
+}
+
+
+/* Mobile Menu */
+.mobile-menu-toggle {
+  display: none; /* Shown via media query */
+  background: none;
+  border: none;
+  color: var(--theme-text-primary);
+  cursor: pointer;
+  padding: var(--space-2);
+  z-index: calc(var(--z-index-sticky) + 2); /* Above overlay */
+}
+@media (max-width: 991px) { /* Adjusted breakpoint */
+  .navbar-menu-desktop, .navbar-actions-desktop { display: none; }
+  .mobile-menu-toggle { display: flex; align-items: center;}
+}
+
+
+
+.navbar-menu-mobile {
+  display: flex;
+  flex-direction: column;
+  position: fixed; /* Full screen overlay menu */
+  top: 0;
+  left: -100%; /* Start off-screen */
+  width: 100%;
+  max-width: 300px; /* Width of the slide-in menu */
+  height: 100vh;
+  background-color: var(--theme-background-content);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-12) var(--space-6) var(--space-6); /* Top padding for close button area */
+  z-index: calc(var(--z-index-sticky) + 1); /* Above navbar, below toggle if toggle is part of header */
+  transition: left 0.3s ease-in-out;
+  overflow-y: auto;
+}
+.navbar-menu-mobile.open {
+  left: 0; /* Slide in */
+}
+
+.navbar.mobile-menu-active {
+  /* Optional: style navbar differently when mobile menu is open, e.g., different shadow or bg for header part */
+}
+
+.mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-4) 0;
+}
+.mobile-nav-links li .nav-link {
+  display: block;
+  padding: var(--space-3) 0; /* Less horizontal padding */
+  font-size: var(--font-size-md);
+  color: var(--theme-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+.mobile-nav-links li .nav-link.active,
+.mobile-nav-links li .nav-link:hover {
+  color: var(--theme-primary-main);
+}
+
+.mobile-menu-divider {
+    border: none;
+    border-top: 1px solid var(--theme-border-divider);
+    margin: var(--space-4) 0;
+}
+
+.mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+.mobile-user-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+.mobile-user-section .user-greeting {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: var(--font-weight-semibold);
+    color: var(--theme-text-primary);
+    padding: var(--space-2) 0;
+}
+.mobile-user-section .nav-link, /* For Profile/Dashboard links */
+.mobile-user-section .logout-btn-mobile {
+    width: 100%;
+    text-align: left;
+    padding: var(--space-3) 0;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--theme-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+.mobile-user-section .nav-link:hover,
+.mobile-user-section .logout-btn-mobile:hover {
+    color: var(--theme-primary-main);
+}
+
+.mobile-theme-toggle {
+  display: flex;
+  transition: left 0.3s ease-in-out;
+  overflow-y: auto;
+  position: fixed;
+  top: 10;
+  right: 15%;
+}
+
+.mobile-theme-toggle .btn-ghost { /* Assuming Button component ghost variant for theme toggle */
+    padding: var(--space-1);
+    color: var(--theme-text-primary); /* Ensure icon is visible */
+}
+.mobile-theme-toggle .btn-ghost span { /* Text next to icon */
+    font-weight: var(--font-weight-medium);
+}
+
+@media (min-width: 900px) {
+  .mobile-theme-toggle {
+    display: none;
+  }
+}

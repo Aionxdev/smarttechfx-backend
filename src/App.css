@@ -1,0 +1,44 @@
+/* src/App.css */
+
+/*
+  This file is for styles that apply to the overall application container (e.g., .app-wrapper)
+  or any truly global styles not fitting into _base.css or _variables.css.
+*/
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the wrapper takes at least the full viewport height */
+  /* background-color: var(--theme-background-body); Will inherit from body usually */
+  /* color: var(--theme-text-primary); Will inherit from body usually */
+}
+
+/*
+  Example: If you want a global max-width for content that is NOT part of a specific layout's container.
+  This is usually handled by layout components themselves (PublicLayout, DashboardLayout's main content area).
+*/
+/*
+.main-content-area {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+*/
+
+/*
+  Specific styling for the notification area if NotificationProvider
+  doesn't render its own fully styled container.
+  The NotificationProvider in our example renders its own absolutely positioned div.
+*/
+/*
+.global-notification-area {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: var(--z-index-notification);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+*/

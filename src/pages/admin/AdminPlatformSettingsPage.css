@@ -1,0 +1,89 @@
+/* src/pages/admin/AdminPlatformSettingsPage.css */
+.admin-platform-settings-page .dashboard-page-header { margin-bottom: var(--space-6); }
+.settings-card { margin-bottom: var(--space-8); }
+.settings-card .card-header-action { margin-left: auto; } /* For Add New button */
+.announcement-form, .settings-card form { display: flex; flex-direction: column; gap: var(--space-4); }
+.form-row { /* from AdminPlanManagementPage.css or global */ }
+.form-checkbox-group { /* from AdminPlanManagementPage.css or global */ }
+.modal-actions { /* from global or MyPlansPage.css */ }
+.modal-message { /* from global or MyPlansPage.css */ }
+
+/* src/pages/admin/AdminPlatformSettingsPage.css */
+/* ... (existing styles for header, settings-card, crypto form/modal, etc.) ... */
+
+.admin-platform-settings-page .dashboard-page-header h1 {
+    /* Adjust if needed */
+}
+
+.settings-card { /* Already have this, ensure consistent margin */
+    margin-bottom: var(--space-8);
+}
+
+.announcements-card .card-header-action { /* For "Compose New" button positioning */
+    display: flex; /* If it's just a button, this might not be needed */
+    justify-content: flex-end; /* Or as desired */
+}
+
+.broadcast-form-container {
+    padding: var(--space-4);
+    border: 1px solid var(--theme-border-divider);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--space-6);
+    background-color: var(--theme-background-secondary); /* Slightly different bg for form area */
+}
+.broadcast-form-container h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-4);
+    color: var(--theme-text-primary);
+}
+
+.announcement-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+.announcement-form .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+}
+
+.section-divider {
+    border: none;
+    border-top: 1px solid var(--theme-border-divider);
+    margin: var(--space-6) 0;
+}
+
+.announcements-card h4 { /* For "Previously Sent Announcements" */
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-4);
+    margin-top: var(--space-2); /* If after form and divider */
+    color: var(--theme-text-primary);
+}
+
+/* Global messages if not already styled */
+.form-global-message {
+  padding: var(--space-3);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  border: 1px solid transparent;
+}
+.form-global-message.success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success-text);
+  border-color: var(--color-success-DEFAULT);
+}
+.form-global-message.error {
+  background-color: var(--color-error-bg);
+  color: var(--color-error-text);
+  border-color: var(--color-error-DEFAULT);
+}
+
+/* Ensure table styles are applied (from common Table.css or specific overrides here) */
+.announcements-card .table-main {
+    /* Any specific overrides for this table */
+}

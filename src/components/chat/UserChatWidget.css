@@ -1,0 +1,145 @@
+/* src/components/chat/UserChatWidget.css */
+.chat-widget-toggle-button {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  background-color: var(--theme-primary-main);
+  color: var(--theme-text-on-primary);
+  border: none;
+  border-radius: 50%;
+  width: 56px; /* Standard FAB size */
+  height: 56px;
+  font-size: 1.5rem; /* For icon or text like '💬' or '✖' */
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-index-popover);
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+.chat-widget-toggle-button:hover {
+  transform: scale(1.1);
+  background-color: var(--theme-primary-hover);
+}
+
+.contact-widget-window { /* Main window */
+  position: fixed;
+  bottom: calc(var(--space-6) + 65px); /* Above toggle button */
+  right: var(--space-6);
+  width: 100%;
+  max-width: 370px; /* Common chat widget width */
+  background-color: var(--theme-background-content);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Important for border-radius on children */
+  z-index: var(--z-index-popover);
+  animation: slideInUp 0.3s ease-out; /* Assumes slideInUp is in _animations.css */
+  height: auto; /* Let content define height */
+  max-height: 75vh; /* Max height of viewport */
+}
+
+.chat-widget-header {
+  background-color: var(--theme-primary-main);
+  color: var(--theme-text-on-primary);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+.chat-widget-header h3 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  color: var(--theme-text-on-primary);
+}
+.chat-close-btn {
+  background: none;
+  border: none;
+  color: var(--theme-text-on-primary);
+  font-size: 1.4rem; /* For × or icon */
+  cursor: pointer;
+  opacity: 0.8;
+  padding: var(--space-1);
+  line-height: 1;
+}
+.chat-close-btn:hover {
+  opacity: 1;
+}
+
+.contact-preview-area { /* Was .chat-widget-messages */
+  flex-grow: 1; /* Takes available space */
+  overflow-y: auto;
+  padding: var(--space-3);
+  min-height: 150px; /* Ensure some space for messages */
+  background-color: var(--theme-background-body); /* Slightly different for contrast if desired */
+}
+
+.contact-preview-area .empty-chat-placeholder {
+    color: var(--theme-text-muted);
+    font-style: italic;
+    text-align: center;
+    padding: var(--space-4);
+    font-size: var(--font-size-sm);
+}
+
+.contact-widget-status-message {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-xs); /* Smaller for status */
+  text-align: center;
+  background-color: var(--color-info-bg);
+  color: var(--color-info-text);
+  border-bottom: 1px solid var(--theme-border-divider);
+  border-top: 1px solid var(--theme-border-divider);
+}
+
+.contact-form-area {
+  padding: var(--space-3);
+  border-top: 1px solid var(--theme-border-divider);
+  background-color: var(--theme-background-content); /* Or slightly different */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex-shrink: 0; /* Prevent form area from shrinking too much */
+}
+
+.contact-textarea {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--theme-border-input);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-primary);
+  resize: vertical;
+  min-height: 80px; /* At least 3-4 lines */
+  color: var(--theme-text-primary);
+  background-color: var(--theme-background-content);
+}
+.contact-textarea:focus {
+  outline: none;
+  border-color: var(--theme-primary-main);
+  box-shadow: 0 0 0 2px var(--theme-primary-main, #007bff)30;
+}
+
+.send-email-button {
+  /* Uses common Button styles */
+  /* Add specific icon alignment if MailOpen icon is used */
+}
+.send-email-button svg {
+    margin-right: var(--space-2);
+}
+
+@media (max-width: 480px) {
+  .contact-widget-window {
+    right: var(--space-2);
+    bottom: calc(var(--space-2) + 65px); /* Adjust based on toggle button size */
+    max-width: calc(100% - (2 * var(--space-2)));
+  }
+  .chat-widget-toggle-button {
+    right: var(--space-2);
+    bottom: var(--space-2);
+  }
+}

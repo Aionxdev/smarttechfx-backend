@@ -1,0 +1,88 @@
+/* src/pages/user/HelpSupportPage.css */
+.help-support-page .dashboard-page-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+.help-support-page .header-icon {
+    color: var(--theme-primary-main);
+    margin-bottom: var(--space-3);
+}
+.help-support-page .dashboard-page-header h1 {
+    font-size: var(--font-size-2xl); /* Or 3xl */
+}
+.help-support-page .dashboard-page-header p {
+    font-size: var(--font-size-md);
+    color: var(--theme-text-secondary);
+    max-width: 600px;
+    margin: var(--space-2) auto 0;
+}
+
+.help-support-content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+}
+
+@media (min-width: 992px) {
+    .help-support-content-grid {
+        grid-template-columns: 2fr 1fr; /* Contact form larger, FAQ preview smaller */
+    }
+}
+
+.contact-support-card .card-body > p {
+    margin-bottom: var(--space-3);
+    line-height: var(--line-height-relaxed);
+}
+
+.support-email-address {
+    font-weight: var(--font-weight-medium);
+    background-color: var(--theme-background-hover);
+    padding: var(--space-3);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--space-6) !important; /* Override default p margin */
+    display: inline-flex; /* To align icon and text */
+    align-items: center;
+    gap: var(--space-2);
+}
+.support-email-address a {
+    color: var(--theme-primary-main);
+    text-decoration: underline;
+}
+
+.support-message-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+.support-message-form .input-field-wrapper {
+    margin-bottom: 0; /* Remove default margin from InputField wrapper if form has gap */
+}
+.support-message-form textarea.input-field {
+    min-height: 150px;
+}
+
+.mailto-notice {
+    font-size: var(--font-size-xs);
+    color: var(--theme-text-muted);
+    text-align: center;
+    margin-top: var(--space-2);
+}
+
+.faq-preview-card .card-body > p {
+    margin-bottom: var(--space-4);
+}
+.quick-faq-links {
+    list-style: none;
+    padding-left: 0;
+}
+.quick-faq-links li {
+    margin-bottom: var(--space-2);
+}
+.quick-faq-links a {
+    color: var(--theme-primary-main);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+}
+.quick-faq-links a:hover {
+    text-decoration: underline;
+}

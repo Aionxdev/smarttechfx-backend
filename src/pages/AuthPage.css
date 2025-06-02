@@ -1,0 +1,144 @@
+/* src/pages/AuthPage.css */
+
+/*
+  This CSS file is for styling common elements on authentication pages
+  that are NOT part of the AuthLayout itself or the specific form components.
+  It styles the direct children of the AuthLayout's <Outlet /> if those
+  children are simple wrappers defined in LoginPage.jsx, RegisterPage.jsx, etc.
+*/
+
+.auth-page-container {
+  /*
+    If your AuthLayout.jsx looks like:
+    <div className="auth-layout">
+      <main className="auth-layout-main">
+        <Outlet /> // LoginPage, RegisterPage, etc. rendered here
+      </main>
+    </div>
+
+    And your LoginPage.jsx looks like:
+    <div className="auth-page-container"> // This div
+        <div className="auth-form-card">  // Another div for card-like appearance
+            <h2 className="auth-page-title">...</h2>
+            <p className="auth-page-subtitle">...</p>
+            <LoginForm />
+        </div>
+    </div>
+
+    Then .auth-page-container might not need much styling if auth-layout-main handles width/centering.
+    The .auth-form-card would be more important for the visual card.
+  */
+  width: 100%; /* Takes full width of its parent (.auth-layout-main) */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the .auth-form-card within this container */
+}
+
+.auth-form-card {
+  /* This is the visual "card" that contains the title, subtitle, and the actual form */
+  width: 100%;
+  background-color: var(--theme-background-content);
+  padding: var(--space-6) var(--space-8); /* Or responsive padding */
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--theme-shadow);
+  /* max-width is typically handled by .auth-layout-main from AuthLayout.css */
+}
+
+.auth-page-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--theme-text-primary);
+  text-align: center;
+  margin-bottom: var(--space-2); /* Space between title and subtitle */
+}
+
+.auth-page-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--theme-text-secondary);
+  text-align: center;
+  margin-bottom: var(--space-6); /* Space between subtitle and form */
+}
+
+/*
+  Styles for .auth-form, .auth-form-error-message, .auth-form-success-message, etc.,
+  are typically better placed in a shared AuthForm.css (imported by LoginForm.jsx/RegisterForm.jsx)
+  or within their respective component CSS files (LoginForm.css, RegisterForm.css).
+  However, if these messages are rendered by the Page component itself outside the Form component,
+  their styles could go here.
+
+  The ones I defined in AuthForm.css were:
+  .auth-form-error-message
+  .auth-form-success-message
+  .auth-form-options
+  .remember-me-label
+  .forgot-password-link
+  .auth-submit-button
+  .auth-form-switch
+  .auth-switch-link
+
+  If these are shared by all auth pages and not just the forms, some could live here.
+  For example, the switch link at the bottom:
+*/
+
+.auth-page-container .auth-form-switch { /* Targeting a common element from AuthForm.css if needed */
+  margin-top: var(--space-6); /* More space after the form card content */
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--theme-text-secondary);
+}
+
+.auth-page-container .auth-switch-link {
+  color: var(--theme-primary-main);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+.auth-page-container .auth-switch-link:hover {
+  text-decoration: underline;
+}
+
+
+/* Specific styles for message containers if rendered by the page, not the form component */
+.auth-page-container .auth-form-success-message,
+.auth-page-container .auth-form-error-message,
+.auth-page-container .auth-form-info-message { /* Added info message style */
+  /* These styles are already in AuthForm.css, so this might be redundant
+     UNLESS these messages are rendered directly by LoginPage.jsx / RegisterPage.jsx
+     OUTSIDE the LoginForm/RegisterForm components. */
+  /* If reusing from AuthForm.css, no need to repeat styles here. */
+  /* If they are separate, then define them: */
+  padding: var(--space-3);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  margin-bottom: var(--space-4);
+  border: 1px solid transparent;
+}
+
+.auth-page-container .auth-form-success-message {
+  background-color: var(--color-success-bg);
+  color: var(--color-success-text);
+  border-color: var(--color-success-DEFAULT);
+}
+.auth-page-container .auth-form-error-message {
+  background-color: var(--color-error-bg);
+  color: var(--color-error-text);
+  border-color: var(--color-error-DEFAULT);
+}
+.auth-page-container .auth-form-info-message {
+  background-color: var(--color-info-bg);
+  color: var(--color-info-text);
+  border-color: var(--color-info-DEFAULT);
+}
+
+.resend-otp-container {
+    text-align: center;
+    margin-top: var(--space-4);
+}
+.resend-otp-container button.btn-link { /* Assuming Button component has a 'link' variant */
+    color: var(--theme-primary-main);
+    font-weight: var(--font-weight-medium);
+    padding: 0;
+    background: none;
+    border: none;
+    text-decoration: underline;
+}

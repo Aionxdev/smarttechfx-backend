@@ -1,0 +1,42 @@
+/* src/components/common/Card.css */
+.card {
+    background-color: var(--theme-background-content);
+    border: 1px solid var(--theme-border-divider);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--theme-shadow, var(--shadow-md)); /* Use theme shadow or default */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* To ensure content respects border radius */
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--theme-border-divider);
+    /* background-color: var(--theme-background-secondary); Optional: slightly different header bg */
+  }
+  
+  .card-title {
+    font-size: var(--font-size-md); /* Or lg, depending on card prominence */
+    font-weight: var(--font-weight-semibold);
+    color: var(--theme-text-primary);
+    margin: 0; /* Remove default heading margin */
+  }
+  
+  .card-header-actions {
+    display: flex;
+    gap: var(--space-2);
+  }
+  
+  .card-body {
+    padding: var(--space-4);
+    flex-grow: 1; /* Allows body to take up available space */
+  }
+  
+  .card-footer {
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--theme-border-divider);
+    background-color: var(--theme-background-secondary); /* Optional footer background */
+  }

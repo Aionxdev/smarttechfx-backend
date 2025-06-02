@@ -1,0 +1,92 @@
+/* src/components/common/Table.css */
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto; /* Allows horizontal scrolling on small screens */
+    margin-bottom: var(--space-4);
+  }
+  
+  .table-main {
+    width: 100%;
+    border-collapse: collapse; /* Removes double borders */
+    border-spacing: 0;
+    font-size: var(--font-size-sm);
+    color: var(--theme-text-primary);
+    background-color: var(--theme-background-content);
+    border: 1px solid var(--theme-border-divider);
+    border-radius: var(--border-radius-md); /* If wrapper has overflow:hidden */
+  }
+  
+  .table-main th,
+  .table-main td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--theme-border-divider);
+  }
+  
+  .table-main th {
+    font-weight: var(--font-weight-semibold);
+    color: var(--theme-text-secondary);
+    background-color: var(--theme-background-secondary); /* Header background */
+    text-transform: capitalize; /* Or as needed */
+  }
+  
+  .table-main tbody tr:last-child td {
+    border-bottom: none; /* Remove bottom border from last row cells */
+  }
+  
+  .table-main tbody tr:hover {
+    background-color: var(--theme-background-hover);
+  }
+  
+  .table-row-clickable {
+      cursor: pointer;
+  }
+  
+  .table-loading-placeholder,
+  .table-empty-message {
+    padding: var(--space-8) var(--space-4);
+    text-align: center;
+    color: var(--theme-text-muted);
+    font-style: italic;
+    background-color: var(--theme-background-content);
+    border: 1px solid var(--theme-border-divider);
+    border-radius: var(--border-radius-md);
+  }
+  
+  /* Basic responsive table for very small screens (stacking) - Optional */
+  /* This is a simplified example; more robust responsive tables are complex */
+  @media screen and (max-width: 768px) {
+    /*
+    .table-main thead {
+      display: none; // Hide table headers
+    }
+    .table-main, .table-main tbody, .table-main tr, .table-main td {
+      display: block;
+      width: 100%;
+    }
+    .table-main tr {
+      margin-bottom: var(--space-4);
+      border: 1px solid var(--theme-border-divider);
+      border-radius: var(--border-radius-md);
+    }
+    .table-main td {
+      text-align: right;
+      padding-left: 50%; // Make space for the label
+      position: relative;
+      border-bottom: 1px solid var(--theme-border-divider);
+    }
+    .table-main td:last-child {
+      border-bottom: none;
+    }
+    .table-main td::before {
+      content: attr(data-label); // Get label from data-label attribute
+      position: absolute;
+      left: var(--space-2);
+      width: calc(50% - var(--space-4));
+      padding-right: var(--space-2);
+      text-align: left;
+      font-weight: var(--font-weight-semibold);
+      color: var(--theme-text-secondary);
+    }
+    */
+  }

@@ -1,0 +1,248 @@
+
+/* --- General Landing Page & Section Styling --- */
+.landing-page-wrapper {
+  overflow-x: hidden;
+}
+.landing-page-wrapper .container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-5, 1.25rem);
+  padding-right: var(--space-5, 1.25rem);
+}
+.section-padding { padding-top: var(--space-16, 4rem); padding-bottom: var(--space-16, 4rem); }
+.section-padding-sm { padding-top: var(--space-10, 2.5rem); padding-bottom: var(--space-10, 2.5rem); }
+
+.landing-page-wrapper section.alternate-bg {
+  background-color: var(--theme-background-secondary);
+}
+
+.section-title {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--theme-text-primary, #212529);
+  margin-bottom: var(--space-4, 1rem);
+  line-height: 1.2;
+}
+.section-subtitle {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  color: var(--theme-text-secondary, #495057);
+  max-width: 780px; 
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--space-10, 2.5rem);
+  line-height: var(--line-height-relaxed, 1.75);
+}
+.section-subtitle.less-margin { margin-bottom: var(--space-6, 1.5rem); }
+.section-subtitle.text-left { margin-left: 0; margin-right: 0; max-width: none; }
+
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.loading-placeholder { display: flex; justify-content: center; align-items: center; padding: var(--space-10, 2.5rem) 0; font-size: var(--font-size-lg, 1.125rem); color: var(--theme-text-muted, #6c757d); }
+.info-text { color: var(--theme-text-muted, #6c757d); font-style: italic; }
+.error-message { color: var(--theme-error-main, #dc3545); background-color: var(--theme-error-bg, #f8d7da); border: 1px solid var(--theme-error-border, #f5c6cb); padding: var(--space-3, 0.75rem); border-radius: var(--border-radius-md, 0.375rem); }
+.section-cta-spacing { margin-top: var(--space-10, 2.5rem); }
+
+/* --- 1. Hero Section --- */
+.hero-section { min-height: 90vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: var(--space-10, 2.5rem) var(--space-5, 1.25rem); color: #ffffff; }
+.hero-video-bg { position: absolute; top: 50%; left: 50%; width: auto; height: auto; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); z-index: 0; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out .3s; /* Slight delay for fade */ }
+.hero-video-bg.loaded { opacity: 1; }
+.hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(18, 24, 38, 0.6) 0%, rgba(18, 24, 38, 0.85) 100%); z-index: 1; }
+.hero-content-container { position: relative; z-index: 2; }
+.hero-title { font-size: clamp(2.75rem, 7vw, 4.75rem); font-weight: var(--font-weight-extrabold, 800); line-height: 1.15; margin-bottom: var(--space-5, 1.25rem); text-shadow: 0 4px 20px rgba(0,0,0,0.5); color: #F9FAFB; }
+.hero-title .highlight-text { color: var(--theme-primary-main); }
+
+.hero-subtitle { 
+  font-size: clamp(1.1rem, 3.5vw, 1.6rem); opacity: 0.95; margin-bottom: var(--space-10, 2.5rem); font-weight: var(--font-weight-light, 300); line-height: var(--line-height-relaxed, 1.75); 
+}
+
+.hero-cta-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-5, 1.25rem); }
+.hero-cta.btn, .hero-cta-secondary.btn { padding: var(--space-3_5, 0.875rem) var(--space-8, 2rem) !important; font-size: var(--font-size-lg, 1.125rem) !important; font-weight: var(--font-weight-semibold, 600) !important; border-radius: var(--border-radius-md, 0.375rem) !important; min-width: 240px; text-transform: uppercase; letter-spacing: 0.5px; }
+.hero-cta-secondary.btn { background-color: transparent !important; border: 2px solid var(--theme-text-on-dark-bg, #fff) !important; color: #fff !important; }
+.hero-cta-secondary.btn:hover { background-color: var(--theme-text-on-dark-bg, #fff) !important; color: var(--theme-primary-dark, #0a58ca) !important; }
+
+/* --- 2. Crypto Price Ticker Section --- */
+.price-ticker-section { background-color: #111827; color: #D1D5DB; padding: var(--space-3, 0.75rem) 0; overflow: hidden; white-space: nowrap; border-top: 1px solid #374151; border-bottom: 1px solid #374151; }
+.price-ticker-loading { text-align: center; padding: var(--space-3, 0.75rem); color: var(--theme-text-muted); }
+.price-ticker-loading.error { color: var(--theme-error-main, red); font-weight: var(--font-weight-medium); }
+.ticker-marquee-wrapper { width: 100%; display: block; }
+.ticker-track { display: inline-block; animation: marquee 80s linear infinite; } /* Slower for more items */
+.ticker-item { display: inline-flex; align-items: center; gap: var(--space-3, 0.75rem); padding: 0 var(--space-6, 1.5rem); font-size: var(--font-size-base, 1rem); }
+.ticker-coin-logo { width: 24px; height: 24px; border-radius: 50%; }
+.ticker-coin-symbol { font-weight: var(--font-weight-semibold, 600); color: #F9FAFB; }
+.ticker-coin-price { font-weight: var(--font-weight-medium, 500); }
+.ticker-coin-change { font-size: 0.9em; font-weight: var(--font-weight-medium, 500); margin-left: var(--space-1, 0.25rem); padding: 3px 7px; border-radius: var(--border-radius-sm, 0.2rem); }
+.ticker-coin-change.up { background-color: rgba(16, 185, 129, 0.15); color: #10B981; }
+.ticker-coin-change.down { background-color: rgba(239, 68, 68, 0.15); color: #EF4444; }
+@keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-33.33%); } } /* Adjust -X% based on number of duplicates in JSX */
+
+/* --- 3. "Why Choose Us?" Section --- */
+.why-choose-us-section { /* Uses .alternate-bg potentially */ }
+.features-grid-landing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-8, 2rem); margin-top: var(--space-10, 2.5rem); }
+.feature-item { background-color: var(--theme-background-content, #fff); padding: var(--space-6, 1.5rem) var(--space-5, 1.25rem); border-radius: var(--border-radius-lg, 0.5rem); text-align: left; box-shadow: var(--shadow-md, /* defaults */); border: 1px solid var(--theme-border-divider, #dee2e6); transition: var(--transition-normal, all 0.3s ease-in-out); }
+.feature-item:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg, /* defaults */); }
+.feature-icon { color: var(--theme-primary-main, #0d6efd); margin-bottom: var(--space-4, 1rem); background-color: var(--theme-primary-main, #0d6efd)1A; padding: var(--space-3, 0.75rem); border-radius: 50%; display: inline-flex; }
+.feature-item h3 { font-size: var(--font-size-xl, 1.25rem); color: var(--theme-text-primary, #212529); margin-bottom: var(--space-3, 0.75rem); font-weight: var(--font-weight-semibold, 600); }
+.feature-item p { font-size: var(--font-size-base, 1rem); color: var(--theme-text-secondary, #495057); line-height: var(--line-height-relaxed, 1.75); margin-bottom: 0; }
+
+/* --- 4. How It Works --- */
+.how-it-works-section { /* No specific alternate bg needed, can be default */ }
+.steps-grid-visual { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-8, 2rem); margin-top: var(--space-10, 2.5rem); position: relative; }
+.step-item-visual { background-color: var(--theme-background-content, #fff); padding: var(--space-8, 2rem) var(--space-6, 1.5rem); border-radius: var(--border-radius-lg, 0.5rem); text-align: center; box-shadow: var(--shadow-md, /* defaults */); border: 1px solid var(--theme-border-divider, #dee2e6); display: flex; flex-direction: column; align-items: center; }
+.step-icon-wrapper { width: 70px; height: 70px; border-radius: 50%; background-color: var(--theme-primary-main, #0d6efd); color: var(--theme-text-on-primary, #fff); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--space-5, 1.25rem); box-shadow: 0 6px 12px var(--theme-primary-main, #0d6efd)50; }
+.step-item-visual h3 { font-size: var(--font-size-lg, 1.125rem); color: var(--theme-text-primary, #212529); margin-bottom: var(--space-3, 0.75rem); font-weight: var(--font-weight-semibold, 600); }
+.step-item-visual p { font-size: var(--font-size-sm, 0.875rem); color: var(--theme-text-secondary, #495057); line-height: var(--line-height-snug, 1.375); margin-bottom: 0; }
+
+/* --- 5. Investment Plans Preview --- */
+.plans-overview-section { /* Uses .alternate-bg */ }
+.plans-grid-landing { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Ensures responsiveness */ gap: var(--space-8, 2rem); margin-top: var(--space-10, 2.5rem); }
+.plan-card-wrapper-landing { display: flex; /* For PlanCard to take full height if needed */ }
+/* PlanCard.css should style the card itself. Ensure it can stretch if needed. */
+/* If PlanCard has fixed height, this wrapper might not be strictly necessary for that. */
+
+/* --- 6. Security Highlights Section --- */
+.security-focus-section { /* Default background */ }
+.security-container-flex { display: flex; align-items: center; gap: var(--space-12, 3rem); flex-wrap: wrap; /* Allow wrapping */ }
+.security-image-area { flex: 1 1 300px; /* Flex basis for image area */ text-align: center; }
+.security-image-area svg { max-width: 100%; height: auto; opacity: 0.7; }
+.security-content-wrapper { flex: 1 1 400px; /* Flex basis for text content */ }
+.security-icon { /* For smaller icon above title if used, not the big Lock */ color: var(--theme-success-main, #198754); background-color: var(--theme-success-main, #198754)1A; padding: var(--space-3, 0.75rem); border-radius: 50%; display: inline-flex; margin-bottom: var(--space-4, 1rem); }
+.security-features-list { list-style: none; padding: 0; margin: var(--space-6, 1.5rem) 0; text-align: left; }
+.security-features-list li { font-size: var(--font-size-base, 1rem); color: var(--theme-text-secondary, #495057); margin-bottom: var(--space-3, 0.75rem); display: flex; align-items: center; }
+.security-features-list li svg { color: var(--theme-success-main, #198754); margin-right: var(--space-3, 0.75rem); flex-shrink: 0; }
+.security-button-container { margin-top: var(--space-8, 2rem); text-align: left; /* Align button with text */ }
+@media (max-width: 768px) {
+  .security-container-flex { flex-direction: column; text-align: center; }
+  .security-content-wrapper .section-title, .security-content-wrapper .section-subtitle, .security-button-container { text-align: center; }
+  .security-features-list { display: inline-block; } /* To center the list block */
+}
+
+
+/* --- 7. Supported Cryptocurrencies Visual --- */
+.supported-cryptos-section { /* Uses .alternate-bg */ }
+.crypto-icons-grid-visual { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-6, 1.5rem) var(--space-8, 2rem); margin-top: var(--space-10, 2.5rem); }
+.crypto-item-visual { display: flex; flex-direction: column; align-items: center; gap: var(--space-2, 0.5rem); min-width: 100px; text-align: center; transition: transform 0.2s ease; padding: var(--space-2, 0.5rem); }
+.crypto-item-visual:hover { transform: scale(1.12); }
+.crypto-logo-visual { width: 60px; height: 60px; border-radius: 50%; object-fit: contain; background-color: rgba(255,255,255,0.8); padding: var(--space-1, 0.25rem); box-shadow: var(--shadow-sm, /* defaults */); }
+.crypto-item-visual span { font-size: var(--font-size-sm, 0.875rem); font-weight: var(--font-weight-medium, 500); color: var(--theme-text-primary, #212529); margin-top: var(--space-1); }
+
+/* --- 8. Testimonials Section --- */
+.testimonials-section { /* Default background */ }
+.testimonial-carousel .slick-slide > div { padding: 0 var(--space-4, 1rem); }
+.testimonial-carousel .slick-dots li button:before { font-size: 12px; color: var(--theme-primary-main, #0d6efd); opacity: 0.4; transition: opacity 0.2s; }
+.testimonial-carousel .slick-dots li.slick-active button:before { opacity: 1; }
+.testimonial-card { text-align: left; height: 100%; display: flex; flex-direction: column; justify-content: space-between; background-color: var(--theme-background-content, #fff); border: 1px solid var(--theme-border-divider, #dee2e6); box-shadow: var(--shadow-lg, /* defaults */); padding: var(--space-8, 2rem); border-radius: var(--border-radius-lg); }
+.testimonial-text { font-size: var(--font-size-base, 1rem); font-style: italic; color: var(--theme-text-secondary, #495057); margin-bottom: var(--space-6, 1.5rem); line-height: var(--line-height-relaxed, 1.75); position: relative; padding-left: var(--space-8, 2rem); }
+.testimonial-text::before { content: '“'; font-family: Georgia, serif; font-size: 4.5rem; color: var(--theme-primary-main, #0d6efd); opacity: 0.15; position: absolute; left: -var(--space-2, -0.5rem); top: -var(--space-5, -1.25rem); line-height: 1; z-index: 0; }
+.testimonial-author { font-weight: var(--font-weight-semibold, 600); color: var(--theme-text-primary, #212529); text-align: right; margin-top: auto; font-size: var(--font-size-base, 1rem); padding-top: var(--space-4, 1rem); border-top: 1px solid var(--theme-border-divider, #dee2e6); }
+
+/* --- 9. FAQs Section --- */
+.faq-section-landing { /* Uses .alternate-bg */ }
+.faq-list-landing { max-width: 850px; margin: var(--space-10, 2.5rem) auto 0; background-color: var(--theme-background-content); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); overflow: hidden; } /* Container for FAQ items */
+.faq-item-landing { border-bottom: 1px solid var(--theme-border-divider, #dee2e6); }
+.faq-item-landing:last-child { border-bottom: none; }
+.faq-question-landing { display: flex; justify-content: space-between; align-items: center; width: 100%; background: none; border: none; text-align: left; padding: var(--space-5, 1.25rem) var(--space-6, 1.5rem); font-size: var(--font-size-lg, 1.125rem); font-weight: var(--font-weight-medium, 500); color: var(--theme-text-primary, #212529); cursor: pointer; transition: background-color 0.2s; }
+.faq-question-landing:hover { background-color: var(--theme-primary-main, #0d6efd)0A; }
+.faq-icon-landing { transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1); color: var(--theme-primary-main, #0d6efd); flex-shrink: 0; margin-left: var(--space-3); }
+.faq-item-landing.open .faq-icon-landing { transform: rotate(90deg); }
+.faq-answer-wrapper-landing { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1); } /* Smooth transition */
+.faq-item-landing.open .faq-answer-wrapper-landing { max-height: 500px; /* Adjust as needed */ }
+.faq-answer-content-landing { font-size: var(--font-size-base, 1rem); color: var(--theme-text-secondary, #495057); padding: 0 var(--space-6, 1.5rem) var(--space-5, 1.25rem) var(--space-6, 1.5rem); line-height: var(--line-height-relaxed, 1.75); }
+.faq-answer-content-landing p { margin-bottom: var(--space-3, 0.75rem); }
+.faq-answer-content-landing p:last-child { margin-bottom: 0; }
+
+/* --- 10. Final Call to Action (CTA) --- */
+.final-cta-section { background: linear-gradient(135deg, var(--theme-primary-main, #007bff) 0%, var(--theme-primary-dark, #0056b3) 100%); color: var(--theme-text-on-primary, #fff); }
+.final-cta-section .hero-cta.btn { margin-top: var(--space-8, 2rem); }
+.final-cta-section .section-title { font-weight: var(--font-weight-extrabold, 800); }
+.final-cta-button.btn { /* If using a specific class for the light button */
+    background-color: var(--theme-light-main, #f8f9fa) !important;
+    color: var(--theme-primary-dark, #0056b3) !important;
+    border-color: var(--theme-light-main, #f8f9fa) !important;
+}
+.final-cta-button.btn:hover {
+    background-color: #e2e6ea !important; /* Slightly darker light */
+    border-color: #dae0e5 !important;
+}
+
+
+/* --- 11. Sticky Mobile CTA --- */
+.sticky-invest-cta { position: fixed; bottom: 0; left: 0; right: 0; background-color: var(--theme-background-content, #fff); padding: var(--space-3, 0.75rem) var(--space-4, 1rem); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: var(--z-index-sticky, 1020); display: none; border-top: 1px solid var(--theme-border-divider, #dee2e6); }
+.sticky-invest-cta .btn { font-size: var(--font-size-md, 1rem) !important; }
+
+/* General Button Icon Alignment */
+.btn .btn-icon-left { margin-right: var(--space-2, 0.5rem); }
+.btn .btn-icon-right { margin-left: var(--space-2, 0.5rem); }
+
+/* Mobile Responsiveness Overrides & Additions */
+@media (max-width: 991px) { /* Tablet and smaller */
+  .plans-grid-landing { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+}
+@media (max-width: 767px) { /* Mobile */
+  .sticky-invest-cta.mobile-only { display: block; }
+  .landing-page-wrapper section { padding-top: var(--space-10, 2.5rem); padding-bottom: var(--space-10, 2.5rem); }
+  .section-title { font-size: clamp(1.75rem, 6vw, 2.4rem); }
+  .section-subtitle { font-size: clamp(0.95rem, 3vw, 1.15rem); margin-bottom: var(--space-8, 2rem); }
+  .hero-title { font-size: clamp(2.2rem, 8vw, 3.2rem); }
+  .hero-subtitle { font-size: clamp(1rem, 4vw, 1.35rem); }
+  .hero-cta-buttons { flex-direction: column; gap: var(--space-4, 1rem); }
+  .hero-cta.btn, .hero-cta-secondary.btn { width: 100%; max-width: 320px; margin: 0 auto; }
+  .ticker-track { animation-duration: 45s; } /* Adjust speed */
+  .ticker-item { padding: 0 var(--space-4, 1rem); }
+  .features-grid-landing, .steps-grid-visual, .plans-grid-landing { gap: var(--space-6, 1.5rem); }
+  .feature-item, .step-item-visual { padding: var(--space-5, 1.25rem); }
+  .security-container-flex { flex-direction: column; text-align: center; }
+  .security-content-wrapper .section-title, .security-content-wrapper .section-subtitle, .security-button-container { text-align: center; }
+  .security-features-list { display: inline-block; }
+  .crypto-icons-grid-visual { gap: var(--space-4, 1rem) var(--space-5, 1.25rem); }
+  .crypto-logo-visual { width: 48px; height: 48px; }
+  .testimonial-carousel .slick-slide > div { padding: 0 var(--space-2, 0.5rem); }
+  .faq-question-landing { font-size: var(--font-size-base, 1rem); padding: var(--space-4, 1rem) var(--space-5, 1.25rem); }
+  .faq-answer-content-landing { padding-left: var(--space-5); padding-right: var(--space-5); }
+}
+
+/* Pulse Hover Animations (No changes needed unless you want to adjust them) */
+.pulse-hover:hover { animation: pulseButton 0.6s ease-in-out; }
+.pulse-hover-secondary:hover { animation: pulseButtonOutline 0.6s ease-in-out; }
+
+/* --- Hover Pulse Animations for CTAs --- */
+/* Apply .pulse-hover to primary buttons, .pulse-hover-secondary to outline/secondary buttons */
+.pulse-hover:hover {
+  animation: pulseButton 0.6s ease-in-out; /* Slower, more noticeable pulse */
+}
+.pulse-hover-secondary:hover {
+    animation: pulseButtonOutline 0.6s ease-in-out;
+}
+
+@keyframes pulseButton {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(var(--theme-primary-rgb, 0, 123, 253), 0.5); /* Assuming primary color, adjust RGB if needed */
+  }
+  70% {
+    transform: scale(1.05); /* Slightly larger pulse */
+    box-shadow: 0 0 0 12px rgba(var(--theme-primary-rgb, 0, 123, 253), 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(var(--theme-primary-rgb, 0, 123, 253), 0);
+  }
+}
+
+@keyframes pulseButtonOutline {
+  0% {
+    transform: scale(1);
+    /* For outline, the shadow effect might be on the border or a subtle inner glow */
+    /* This example makes the button itself slightly "thicker" and then recede */
+    box-shadow: 0 0 0 0px var(--theme-primary-main, #007bff)33; /* Lighter, more transparent shadow */
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 0 6px var(--theme-primary-main, #007bff)1A;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0px var(--theme-primary-main, #007bff)33;
+  }
+}

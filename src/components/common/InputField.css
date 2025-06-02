@@ -1,0 +1,93 @@
+/* src/components/common/InputField.css */
+.input-field-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--space-4); /* Default spacing */
+    width: 100%;
+  }
+  
+  .input-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--theme-text-secondary);
+    margin-bottom: var(--space-1);
+    display: block;
+  }
+  
+  .input-required-asterisk {
+    color: var(--color-error-DEFAULT);
+    margin-left: var(--space-05, 2px);
+  }
+  
+  .input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    color: var(--theme-text-primary);
+    background-color: var(--theme-background-content);
+    border: 1px solid var(--theme-border-input);
+    border-radius: var(--border-radius-md);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  
+  .input-field:focus {
+    outline: none;
+    border-color: var(--theme-primary-main);
+    box-shadow: 0 0 0 2px var(--theme-primary-main, #007bff)30; /* Focus ring */
+  }
+  
+  .input-field::placeholder {
+    color: var(--theme-text-subtle, #9ca3af);
+    opacity: 1; /* Firefox */
+  }
+  
+  .input-field:disabled {
+    background-color: var(--theme-background-secondary, #e9ecef);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  .input-field-wrapper.has-error .input-field {
+    border-color: var(--color-error-DEFAULT);
+  }
+  .input-field-wrapper.has-error .input-field:focus {
+    border-color: var(--color-error-DEFAULT);
+    box-shadow: 0 0 0 2px var(--color-error-DEFAULT, #dc3545)30;
+  }
+  
+  
+  .input-error-message {
+    font-size: var(--font-size-sm);
+    color: var(--color-error-DEFAULT);
+    margin-top: var(--space-1);
+  }
+  
+  /* Icons */
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: var(--theme-text-muted);
+    pointer-events: none; /* So it doesn't block input focus */
+  }
+  .input-icon-left {
+    left: var(--space-3);
+  }
+  .input-icon-right {
+    right: var(--space-3);
+  }
+  .input-field.has-left-icon {
+    padding-left: calc(var(--space-3) + var(--space-6)); /* Adjust based on icon size + spacing */
+  }
+  .input-field.has-right-icon {
+    padding-right: calc(var(--space-3) + var(--space-6)); /* Adjust based on icon size + spacing */
+  }

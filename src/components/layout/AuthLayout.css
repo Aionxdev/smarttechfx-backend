@@ -1,0 +1,51 @@
+/* src/components/layout/AuthLayout.css */
+.auth-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center content vertically for short forms */
+    min-height: 100vh;
+    background-color: var(--theme-background-body); /* Or a specific auth page background */
+    padding: var(--space-6) var(--space-4); /* Padding for smaller screens */
+  }
+  
+  .auth-layout-header {
+    margin-bottom: var(--space-8);
+    text-align: center;
+  }
+  
+  .auth-layout-logo h1 {
+    font-size: var(--font-size-3xl);
+    color: var(--theme-primary-main);
+    margin: 0;
+    text-decoration: none;
+  }
+  .auth-layout-logo img {
+    height: 40px; /* Adjust */
+    width: auto;
+  }
+  
+  .auth-layout-main {
+    width: 100%;
+    max-width: 450px; /* Max width for the auth form container */
+    /* The actual form (.auth-form) will have its own padding/bg from its CSS */
+  }
+  
+  .auth-layout-footer {
+    margin-top: var(--space-8);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--theme-text-muted);
+  }
+  .auth-layout-footer p {
+      margin-bottom: var(--space-2);
+  }
+  .auth-layout-footer nav a {
+    color: var(--theme-text-muted);
+    margin: 0 var(--space-1);
+    text-decoration: none;
+  }
+  .auth-layout-footer nav a:hover {
+    color: var(--theme-primary-main);
+    text-decoration: underline;
+  }

@@ -1,0 +1,62 @@
+/* src/styles/_theme.css */
+
+/* Default (Light Theme) values - many can be inherited from :root in _variables.css if suitable */
+:root {
+    --theme-background-body: #f8f9fa; /* Slightly off-white for body */
+    --theme-background-content: #ffffff; /* Pure white for content cards/areas */
+    --theme-background-sidebar: #6b7b8a; /* Example dark sidebar for contrast in light mode */
+    --theme-background-navbar: #ffffff;
+    --theme-background-hover: #e9ecef;
+    --theme-background-active: #dee2e6;
+  
+    --theme-text-primary: #212529;       /* Dark text for light theme */
+    --theme-text-secondary: #495057;
+    --theme-text-muted: #6c757d;
+    --theme-text-on-primary: #ffffff; /* Text on primary color buttons */
+    --theme-text-on-dark-bg: #1f2937; /* Text on dark backgrounds if light theme has dark sections */
+  
+    --theme-border-primary: #dee2e6;
+    --theme-border-input: #ced4da;
+    --theme-border-divider: #e9ecef;
+  
+    --theme-primary-main: var(--color-primary-DEFAULT, #007bff); /* Blueprint Deep Blue */
+    --theme-primary-hover: var(--color-primary-hover, #0056b3);
+    --theme-primary-active: var(--color-primary-active, #004085);
+  
+    --theme-accent-green: var(--color-accent-green-DEFAULT, #28a745);
+    --theme-accent-blue: var(--color-accent-blue-DEFAULT, #17a2b8); /* Blueprint Neon Blue */
+  
+    --theme-shadow: var(--shadow-md);
+  }
+  
+  
+  /* Dark Theme (Blueprint default) */
+  [data-theme="dark"] {
+    --theme-background-body: #121826; /* Dark Grey / Deep Blueish Grey */
+    --theme-background-content: #1f2937; /* Slightly lighter for cards */
+    --theme-background-sidebar: #111827; /* Even darker sidebar */
+    --theme-background-navbar: #1f2937;
+    --theme-background-hover: #374151;
+    --theme-background-active: #4b5563;
+  
+    --theme-text-primary: #f9fafb;       /* Light text for dark theme */
+    --theme-text-secondary: #d1d5db;
+    --theme-text-muted: #9ca3af;
+    --theme-text-on-primary: #ffffff;
+    --theme-text-on-dark-bg: #f9fafb; /* Text on dark backgrounds is light */
+  
+  
+    --theme-border-primary: #374151;
+    --theme-border-input: #4b5563;
+    --theme-border-divider: #2d3748;
+  
+    /* Blueprint: Primary: Deep Blue / Dark Grey; Accent: Electric Green / Neon Blue */
+    --theme-primary-main: #2563eb;  /* Electric/Neon Blue as primary interactive elements */
+    --theme-primary-hover: #1d4ed8;
+    --theme-primary-active: #1e40af;
+  
+    --theme-accent-green: #34d399; /* Electric Green */
+    --theme-accent-blue: var(--theme-primary-main); /* Using primary as the neon blue accent */
+  
+    --theme-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.20); /* Darker shadow */
+  }
